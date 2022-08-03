@@ -89,6 +89,7 @@ const Opt = styled(Link)`
     flex-direction: column;
     margin: 0.15rem;
     padding: 0.15rem;
+    font-weight: bold;
     p {
       font-size: 0.75rem;
     }
@@ -102,7 +103,6 @@ function SideMenu() {
   const isOpen = useSelector((state) => state.menu.isOpen);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  console.log(pathname);
 
   const closeMenu = () => {
     dispatch(setOpen);

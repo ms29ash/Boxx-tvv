@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useQuery } from '@tanstack/react-query'
 import axios from '../axios'
+import { Link } from 'react-router-dom'
 
 
 const Container = styled.div`
@@ -74,12 +75,12 @@ const Carousel = styled(Slider)`
   }
 `;
 
-const Wrap = styled.div`
+const Wrap = styled(Link)`
   cursor: pointer;
   position: relative;
   cursor: pointer;
   height: 100%;
-
+  color:#fff;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 250ms;
@@ -162,8 +163,8 @@ function ImageSlider({ title }) {
     <Container>
       <h3>{title}</h3>
       <Carousel {...settings}>
-        {isSuccess && data?.data.map((item, i) => (
-          <Wrap>
+        {isSuccess && data?.data.map((item) => (
+          <Wrap key={item._id} to={`/movies/${item._id}`} >
             <img src={item?.thumbnail} alt="" />
             <Details>
               <div>

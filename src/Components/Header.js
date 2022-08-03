@@ -71,7 +71,10 @@ const Menu = styled.div`
 const Logo = styled(Link)`
  
   img {
-    width: 125px;
+    width: 150px;
+    @media screen and (min-width: 0px) and (max-width: 500px) {
+    width: 100px;
+  }
   }
 `;
 

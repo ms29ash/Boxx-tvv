@@ -12,7 +12,11 @@ function App() {
 
         <Route path="/" element={<Page />}>
           <Route index element={<Home />} />
-          <Route path="movies" element={<List />} />
+          <Route path="movies" >
+            <Route index element={<List />} />
+            <Route path=":id" element={<Detail />} />
+
+          </Route>
           <Route path="shows" element={<List />} />
           <Route path="categories" element={<List />} />
           <Route path="details" element={<Detail />} />
