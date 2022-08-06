@@ -17,7 +17,12 @@ function App() {
             <Route path=":id" element={<Detail />} />
 
           </Route>
-          <Route path="shows" element={<List />} />
+          <Route path="shows" >
+            <Route index element={<List />} />
+            <Route path=":id" element={<Detail />} />
+
+          </Route>
+
           <Route path="categories" element={<List />} />
           <Route path="details" element={<Detail />} />
         </Route>
