@@ -9,15 +9,17 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
-import { BiHelpCircle, BiLogIn } from "react-icons/bi";
+import { BiHelpCircle, BiLogIn, BiCategory } from "react-icons/bi";
 import { useSelector, useDispatch } from 'react-redux';
 import { setOpen } from '../features/menu/menuSlice';
 import { MdOutlineMovie } from "react-icons/md";
+// eslint-disable-next-line no-unused-vars
 import { RiMovieLine } from "react-icons/ri";
+import { FaSignOutAlt } from "react-icons/fa";
 
 const Container = styled.div`
   width: 30vw;
-  max-width: 300px;
+  max-width: 200px;
 
   height: 99vh;
   margin: 0.5vh 1vw 0.5vh 0;
@@ -79,11 +81,16 @@ const Opt = styled(Link)`
   cursor: pointer;
   align-items: center;
   padding: 0.5rem;
+  font-weight:bold;
   border-radius: 30px;
   color: ${(p) => p.selected === true && p.theme.color.main};
+  p{
+    font-size:1rem;
+  }
   &:hover {
+   
     background-color: ${(p) => p.theme.color.main};
-    ${(p) => p.selected === true && "background-color:#fff;"}
+    color:${(p) => p.selected === true && '#fff'};
   }
   @media screen and (min-width: 500px) and (max-width: 1024px) {
     flex-direction: column;
@@ -96,11 +103,16 @@ const Opt = styled(Link)`
   }
 `;
 const Icon = styled.div`
-  padding: 0 1rem;
+  padding-right: 1rem;
+  padding-left: 0.5rem;
+  svg{
+    stroke:#fff;
+  }
 `;
 
 function SideMenu() {
   const isOpen = useSelector((state) => state.menu.isOpen);
+  const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
 
@@ -118,24 +130,31 @@ function SideMenu() {
           <Options>
             <Group>
               <Head>Menu</Head>
-              <Opt to="/" onClick={closeMenu} selected={pathname === '/' || pathname === '/h'}>
+              <Opt to="/" onClick={closeMenu} selected={pathname === '/'}>
                 <Icon>
                   <AiOutlineHome />
                 </Icon>
                 <p>Home</p>
               </Opt>
+              <Opt to="/categories" onClick={closeMenu} selected={pathname === '/categories' || pathname === '/h'}>
+                <Icon>
+                  <BiCategory />
+                </Icon>
+                <p>Categories</p>
+              </Opt>
               <Opt to="/movies" onClick={closeMenu} selected={pathname === '/movies'}>
                 <Icon>
                   <MdOutlineMovie />
                 </Icon>
-                <p>Movie</p>
+                <p>Movies</p>
               </Opt>
               <Opt to="/shows" onClick={closeMenu} selected={pathname === '/shows'}>
                 <Icon>
                   <RiMovieLine />
                 </Icon>
-                <p>Show</p>
+                <p>Shows</p>
               </Opt>
+
 
             </Group>
             <hr />
@@ -181,19 +200,19 @@ function SideMenu() {
                 <p>Help</p>
               </Opt>
             </Group>
-          </Options>
-          {/* <Opt to="/">
-            <Icon>
-              <FaSignOutAlt />{" "}
-            </Icon>
-            <p>Sign Out</p>
-          </Opt> */}
-          <Opt to="/">
-            <Icon>
-              <BiLogIn />{" "}
-            </Icon>
-            <p>Login</p>
-          </Opt>
+          </Options>{
+            user ? (<Opt to="/">
+              <Icon>
+                <FaSignOutAlt />{" "}
+              </Icon>
+              <p>Sign Out</p>
+            </Opt>) :
+              (<Opt to="/">
+                <Icon>
+                  <BiLogIn />{" "}
+                </Icon>
+                <p>Login</p>
+              </Opt>)}
         </Wrapper>
       </Sidebar>
     </Container>
