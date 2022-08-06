@@ -11,7 +11,7 @@ const Container = styled.div`
 margin:0 auto;
 `
 const Carousel = styled(Slider)`
-margin-top:20px;
+margin-top:10px;
 ul li button{
     &:before{
         font-size:10px;
@@ -38,14 +38,12 @@ const Wrap = styled.div`
     border:4px solid transparent;
     cursor:pointer;
     transition-duration:300ms;
-    &:hover{
-        border:4px solid rgb(249 ,249 ,249 ,0.8);
-    }
+   
 }`
 
 function Intro() {
     let settings = {
-        dots: true,
+        dots: false,
         infinite: true,
         speed: 500,
         slideToShow: 1,
