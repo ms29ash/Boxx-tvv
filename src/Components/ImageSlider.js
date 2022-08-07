@@ -6,9 +6,11 @@ import Slider from "react-slick";
 import { useQuery } from "@tanstack/react-query";
 import axios from "../axios";
 import Card from "./Card";
+import LeftArrow, { RightArrow } from "./Arrows";
 
 const Container = styled.div`
   margin: 2.5rem auto;
+  overflow: visible;
   @media screen and (min-width: 0px) and (max-width: 720px) {
     margin: 3rem auto;
   }
@@ -18,59 +20,38 @@ const Container = styled.div`
   }
 `;
 const Carousel = styled(Slider)`
-  width: 90%;
+  width: 95%;
   margin: 0 auto;
   margin-top: 20px;
-  overflow: visible;
+  overflow-x: visible;
+  overflow-y: visible;
   ul li button {
     &:before {
       font-size: 10px;
       color: rgb(150, 158, 171);
     }
   }
+  .slick-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
   &:hover {
-    .slick-arrow {
-      display: block !important;
-      @media screen and (min-width: 0px) and (max-width: 1024px) {
-        display: none !important;
-      }
+    .btn {
+      display: flex;
     }
   }
 
-  .slick-slider {
-    width: 100%;
+  .slick-next:before {
+    content: "" !important;
   }
-
-  .slick-arrow {
-    display: none !important;
-    height: 300px;
-    background: rgb(0, 0, 0);
-    background: linear-gradient(
-      270deg,
-      rgba(0, 0, 0, 0.33967090254070376) 0%,
-      rgba(0, 0, 0, 1) 74%
-    );
-    width: 60px;
-
-    &:before {
-      font-size: 3rem;
-    }
+  .slick-prev:before {
+    content: "" !important;
   }
 
   .slick-list {
     overflow: visible;
     width: 100%;
-  }
-  .slick-dots li.slick-active button:before {
-    color: white;
-  }
-
-  .slick-slide,
-  slick-active {
-  }
-
-  button {
-    z-index: 1;
   }
 `;
 
@@ -78,26 +59,24 @@ const Wrap = styled.div`
   cursor: pointer;
   position: relative;
   cursor: pointer;
+  overflow: visible;
   height: 100%;
   color: #fff;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 250ms;
-  @media screen and (min-width: 1440px) and (max-width:10000px){
- 
-  &:hover {
-    transition-duration: 300ms;
-    transform: scale(1.25);
-    z-index: 10;
-    
-    div {
-      display: flex;
+
+  @media screen and (min-width: 1024px) and (max-width: 10000px) {
+    &:hover {
+      transition-duration: 300ms;
+      transform: scale(1.25);
+      z-index: 10;
+      div {
+        display: flex;
+      }
     }
   }
-}
-  `;
-
-
+`;
 
 function ImageSlider({ title }) {
   let settings = {
@@ -106,6 +85,10 @@ function ImageSlider({ title }) {
     slidesToShow: 6,
     slidesToScroll: 3,
     swipe: true,
+    rows: 1,
+    nextArrow: <RightArrow />,
+    prevArrow: <LeftArrow />,
+
     responsive: [
       {
         breakpoint: 1024,
@@ -119,9 +102,6 @@ function ImageSlider({ title }) {
   const fetchData = async (path) => {
     return axios.get(path);
   };
-
-
-
 
   const { data, isSuccess } = useQuery([`${title}`], () =>
     fetchData(`/${title}`)
