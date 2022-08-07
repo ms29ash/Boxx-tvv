@@ -71,9 +71,8 @@ function Card({ item, title }) {
   useEffect(() => {
     const getIndexOf = (list, id) => {
       const ids = list.map(listItem => listItem._id);
-      return ids.indexOf(item._id);
+      return ids.indexOf(id);
     }
-    console.log('change');
     const i = getIndexOf(findWatchlist, item._id);
     setIndex(i)
   }, [findWatchlist, item._id])

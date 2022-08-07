@@ -83,14 +83,18 @@ const Wrap = styled.div`
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 250ms;
+  @media screen and (min-width: 1440px) and (max-width:10000px){
+ 
   &:hover {
     transition-duration: 300ms;
     transform: scale(1.25);
     z-index: 10;
+    
     div {
       display: flex;
     }
   }
+}
   `;
 
 
