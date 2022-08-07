@@ -34,10 +34,10 @@ const Wrap = styled.div`
         object-fit:cover;
         border-radius:14px;
         margin:0px 1%;
-    box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px , rgb(0 0 0 / 73%) 0px 16px 10px -10px ;
-    border:4px solid transparent;
-    cursor:pointer;
-    transition-duration:300ms;
+        box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px , rgb(0 0 0 / 73%) 0px 16px 10px -10px ;
+        border:4px solid transparent;
+        cursor:pointer;
+        transition-duration:300ms;
    
 }`
 

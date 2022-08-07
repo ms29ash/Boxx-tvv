@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from 'react-router-dom'
 
 const Container = styled.div`
   width: 100%;
-  margin: 4rem 0 5rem;
+  margin: 2rem 0 5rem;
   height: 30vh;
   @media screen and (max-width: 1200px) and (min-width: 720px) {
     height: 15vh;
@@ -27,8 +28,6 @@ const Wrapper = styled.div`
   height: 100%;
   align-items: center;
   div {
-    background: #595959;
-    background: #000;
     background: #151515;
     height: 100%;
     width: 20%;
@@ -36,7 +35,6 @@ const Wrapper = styled.div`
     display: grid;
     place-items: center;
     border-radius: 10px;
-    border: 2px solid #000;
     border: 2px solid #151515;
     cursor: pointer;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
@@ -62,25 +60,26 @@ const Wrapper = styled.div`
 `;
 
 function Channels() {
+  const navigate = useNavigate();
   return (
     <Container>
       <ChannelContainer>
         <h3>Channels</h3>
         <Wrapper>
-          <div>
-            <img src="./images/Disney+logo.png" alt="" />
+          <div onClick={() => { navigate('/channels/disney+') }}>
+            <img src="./images/disney+-logo.png" alt="" />
           </div>
-          <div>
+          <div onClick={() => { navigate('/channels/netflix') }}>
             <img src="./images/netflix-logo.png" alt="" />
           </div>
-          <div>
+          <div onClick={() => { navigate('/channels/zee5') }}>
             <img src="./images/zee5-logo.png" alt="" />
           </div>
-          <div>
-            <img src="./images/prime-video-amazon.png" alt="" />
+          <div onClick={() => { navigate('/channels/primeVideo') }}>
+            <img src="./images/primeVideo-logo.png" alt="" />
           </div>
-          <div>
-            <img src="./images/sonyLiv-logo.png" alt="" />
+          <div onClick={() => { navigate('/channels/sonyliv') }}>
+            <img src="./images/sonyliv-logo.png" alt="" />
           </div>
 
         </Wrapper>

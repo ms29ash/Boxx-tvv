@@ -4,6 +4,7 @@ import Home from "./Page/Home";
 import List from "./Page/List";
 import Page from "./Components/Page";
 import Detail from "./Page/Detail";
+import Channel from "./Page/Channel";
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
           <Route path="shows" >
             <Route index element={<List />} />
             <Route path=":id" element={<Detail />} />
+
+          </Route>
+          <Route path="channels" >
+            <Route path=":name" element={<Channel />} />
 
           </Route>
 
