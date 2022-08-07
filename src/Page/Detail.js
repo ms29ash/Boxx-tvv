@@ -1,21 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
 import axios from "../axios";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { GiPlainCircle } from "react-icons/gi";
+import {
+  AiOutlinePlusCircle,
+  AiOutlinePlayCircle,
+  AiOutlineCheckCircle,
+} from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToWatchlist,
+  removefromWatchlist,
+} from "../features/watchlist/watchlistSlice";
+
 const Container = styled.div`
   width: 100%;
 `;
 const Wrapper = styled.div`
-  /* &:before { */
   background: url(${(p) => p.bg}) no-repeat center center/cover;
   width: 100%;
   height: auto;
   object-fit: cover;
   aspect-ratio: 16 / 8;
-  /* } */
 `;
 
 const Details = styled.div`
@@ -27,9 +35,10 @@ const Details = styled.div`
   background: rgb(0, 0, 0);
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0.97) 2%,
-    rgba(0, 0, 0, 0.84) 36%,
-    rgba(0, 0, 0, 0) 56%
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.87) 18%,
+    rgba(0, 0, 0, 0.74) 46%,
+    rgba(0, 0, 0, 0) 66%
   );
 `;
 const Group = styled.div`
@@ -53,7 +62,6 @@ const List = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  /* margin: 1rem 0; */
   p {
     font-weight: 400;
   }
@@ -63,8 +71,47 @@ const List = styled.div`
   }
 `;
 
+const Buttons = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const PlayBtn = styled.button`
+  background-color: ${(p) => p.theme.color.main};
+  color: white;
+  width: 15vw;
+  max-width: 200px;
+  border: none;
+  margin-right: 0.5rem;
+  padding: 0.9rem 0;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 5%;
+  svg {
+    font-weight: bold;
+    font-size: 1.75rem;
+    margin-right: 0.5rem;
+  }
+  &:hover {
+    background-color: ${(p) => p.theme.color.mainDark};
+  }
+`;
+
+const WatchListBtn = styled(PlayBtn)`
+  border: 1px solid ${(p) => p.theme.color.main};
+  color: ${(p) => p.theme.color.main};
+  background-color: rgba(0, 0, 0, 0);
+  &:hover {
+    background-color: rgb(89, 89, 89, 0.5);
+  }
+`;
 const Desc = styled.p`
-  width: 60%;
+  width: 56%;
   margin-top: 1.7rem !important;
 `;
 
@@ -78,12 +125,53 @@ function Detail() {
     fetchData(pathname)
   );
 
+  const findWatchlist = useSelector((state) => state.watchlist.watchlist);
+
+  const [index, setIndex] = useState(-1);
+  useEffect(() => {
+    const getIndexOf = (list, id) => {
+      const ids = list.map((listItem) => listItem._id);
+      return ids.indexOf(id);
+    };
+    const i = getIndexOf(findWatchlist, data?.data[0]?._id);
+    setIndex(i);
+  }, [data, findWatchlist]);
+
+  const dispatch = useDispatch();
+
+  const addtoWatchList = (item) => {
+    dispatch(addToWatchlist(item));
+  };
+  const removeFromWatchList = (id) => {
+    dispatch(removefromWatchlist(id));
+  };
+
   return (
     <Container>
       {isSuccess && (
         <Wrapper bg={data?.data[0]?.poster}>
           <Details>
             <Group>
+              <Buttons>
+                {index < 0 ? (
+                  <WatchListBtn
+                    onClick={() => {
+                      addtoWatchList(data?.data[0]);
+                    }}>
+                    <AiOutlinePlusCircle /> Add to Watchlist
+                  </WatchListBtn>
+                ) : (
+                  <WatchListBtn
+                    onClick={() => {
+                      removeFromWatchList(index);
+                    }}>
+                    <AiOutlineCheckCircle /> Added to Watchlist
+                  </WatchListBtn>
+                )}
+                <PlayBtn>
+                  <AiOutlinePlayCircle /> Play Now
+                </PlayBtn>
+              </Buttons>
               <h2>{data?.data[0].name}</h2>
 
               <List>
@@ -103,7 +191,6 @@ function Detail() {
           </Details>
         </Wrapper>
       )}
-      <ReactQueryDevtools initialIsOpen={false} />
     </Container>
   );
 }

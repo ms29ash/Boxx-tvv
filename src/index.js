@@ -16,6 +16,7 @@ const queryClient = new QueryClient();
 const theme = {
   color: {
     main: "#f20544",
+    mainDark: "#c00436"
 
   },
 };
