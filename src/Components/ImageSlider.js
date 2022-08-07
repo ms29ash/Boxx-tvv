@@ -3,13 +3,12 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { useQuery } from '@tanstack/react-query'
-import axios from '../axios'
-import { Link } from 'react-router-dom'
-
+import { useQuery } from "@tanstack/react-query";
+import axios from "../axios";
+import Card from "./Card";
 
 const Container = styled.div`
-  margin: 6rem auto;
+  margin: 2.5rem auto;
   @media screen and (min-width: 0px) and (max-width: 720px) {
     margin: 3rem auto;
   }
@@ -75,12 +74,12 @@ const Carousel = styled(Slider)`
   }
 `;
 
-const Wrap = styled(Link)`
+const Wrap = styled.div`
   cursor: pointer;
   position: relative;
   cursor: pointer;
   height: 100%;
-  color:#fff;
+  color: #fff;
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 250ms;
@@ -92,49 +91,15 @@ const Wrap = styled(Link)`
       display: flex;
     }
   }
+  `;
 
-  img {
-    width: 95%;
-    margin: 5%;
-    object-fit: cover;
-    border-radius: 14px;
-    margin: 0px 1%;
-    height: 300px;
-    box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
-      rgb(0 0 0 / 73%) 0px 16px 10px -10px;
-    @media screen and (min-width: 0px) and (max-width: 720px) {
-      height: 200px !important;
-    }
-  }
-`;
-const Details = styled.div`
-  border-radius: 14px;
-  display: none;
-  position: absolute;
-  align-items: flex-end;
-  bottom: 0;
-  right: 0%;
-  left: 0%;
-  top: 0;
-  background: rgb(0, 0, 0);
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.13967090254070376) 40%,
-    rgba(0, 0, 0, 0.8) 100%
-  );
-  div {
-    margin-bottom: 2rem;
-    margin-left: 10%;
-    flex-direction: column;
-    
-  }
-`;
+
 
 function ImageSlider({ title }) {
   let settings = {
     infinite: false,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 6,
     slidesToScroll: 3,
     swipe: true,
     responsive: [
@@ -142,7 +107,6 @@ function ImageSlider({ title }) {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
-
         },
       },
     ],
@@ -153,29 +117,22 @@ function ImageSlider({ title }) {
   };
 
 
-  const { data, isSuccess } = useQuery(
-    [`${title}`],
-    () => fetchData(`/${title}`),
 
 
+  const { data, isSuccess } = useQuery([`${title}`], () =>
+    fetchData(`/${title}`)
   );
+
   return (
     <Container>
       <h3>{title}</h3>
       <Carousel {...settings}>
-        {isSuccess && data?.data.map((item) => (
-          <Wrap key={item._id} to={`/movies/${item._id}`} >
-            <img src={item?.thumbnail} alt="" />
-            <Details>
-              <div>
-                <h4>{item?.name}</h4>
-                {item?.seasons && <p>{item?.seasons} Seasons</p>}
-                {item?.time && <p>{item?.time} </p>}
-                <p>{item?.category}</p>
-              </div>
-            </Details>
-          </Wrap>
-        ))}
+        {isSuccess &&
+          data?.data.map((item) => (
+            <Wrap key={item._id}>
+              <Card title={title} item={item} />
+            </Wrap>
+          ))}
       </Carousel>
     </Container>
   );

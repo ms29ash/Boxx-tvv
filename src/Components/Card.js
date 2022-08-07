@@ -1,7 +1,23 @@
-import React from 'react'
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { AiOutlinePlusCircle, AiOutlineCheckCircle } from "react-icons/ai";
+import { addToWatchlist, removefromWatchlist } from '../features/watchlist/watchlistSlice'
+import { useDispatch, useSelector } from 'react-redux';
 
 
+
+
+const Img = styled.img`
+    width: 96%;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 0px auto;
+    aspect-ratio: 6/ 8;
+    box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
+      rgb(0 0 0 / 73%) 0px 16px 10px -10px;
+  
+`;
 const Details = styled.div`
   border-radius: 14px;
   display: none;
@@ -10,32 +26,90 @@ const Details = styled.div`
   bottom: 0;
   right: 0%;
   left: 0%;
-  top: 0;
+  top: 50%;
   background: rgb(0, 0, 0);
   background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.13967090254070376) 40%,
-    rgba(0, 0, 0, 0.8) 100%
+    0deg,
+    rgba(0, 0, 0, 0.989502835313813) 75%,
+    rgba(0, 0, 0, 0) 96%
   );
+  cursor: default;
   div {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     margin-left: 10%;
     flex-direction: column;
   }
+  button {
+    background: rgba(0, 0, 0, 0);
+    border: none;
+    color: White;
+    cursor: pointer;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0 0s;
+    &:hover {
+      color: ${(p) => p.theme.color.main};
+    }
+    svg {
+      font-size: 1.25rem;
+      margin-right: 3px;
+    }
+  }
 `;
 
-function Card({ time, name, seasons, category }) {
+
+function Card({ item, title }) {
+  const findWatchlist = useSelector((state) => state.watchlist.watchlist);
+
+  const [index, setIndex] = useState(-1);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+
+  useEffect(() => {
+    const getIndexOf = (list, id) => {
+      const ids = list.map(listItem => listItem._id);
+      return ids.indexOf(item._id);
+    }
+    console.log('change');
+    const i = getIndexOf(findWatchlist, item._id);
+    setIndex(i)
+  }, [findWatchlist, item._id])
+
+  const addtoWatchList = (item) => {
+    dispatch(addToWatchlist(item));
+  }
+  const removeFromWatchList = (id) => {
+    dispatch(removefromWatchlist(id));
+  }
   return (
+    < >
+      <Img
+        src={item?.thumbnail}
+        alt=""
+        onClick={() => {
+          navigate(`/${title}/${item._id}`);
+        }}
+      />
+      <Details>
+        <div>
+          <h4>{item?.name}</h4>
+          {item?.seasons && <p>{item?.seasons} Seasons</p>}
+          {item?.time && <p>{item?.time} </p>}
+          <p>{item?.category}</p>
 
-    <Details>
-      <div>
-        <h4>{name}</h4>
-        {seasons && <p>{seasons} Seasons</p>}
-        {time && <p>{time}</p>}
-        <p>{category}</p>
-      </div>
-    </Details>
-
+          {(index < 0) ? (<button onClick={() => { addtoWatchList(item) }}>
+            <AiOutlinePlusCircle />
+            Add to Watchlist
+          </button>) : (<button onClick={() => { removeFromWatchList(index) }}>
+            <AiOutlineCheckCircle />
+            Added to Watchlist
+          </button>)}
+        </div>
+      </Details>
+    </>
   )
 }
 

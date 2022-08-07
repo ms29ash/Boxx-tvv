@@ -15,7 +15,7 @@ overflow-y:scroll;
 overflow-x:hidden;
 width:69vw;
 @media screen and (min-width:1000px) and (max-width:100000px) {
-    width:calc(100vw - 300px)
+    width:calc(100vw - 200px)
 }
 @media screen and (min-width:0px) and (max-width:1024px) {
     width:100vw;
