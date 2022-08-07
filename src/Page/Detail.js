@@ -19,14 +19,22 @@ const Container = styled.div`
   width: 100%;
 `;
 const Wrapper = styled.div`
-  background: url(${(p) => p.bg}) no-repeat center center/cover;
+  position: relative;
   width: 100%;
-  height: auto;
-  object-fit: cover;
-  aspect-ratio: 16 / 8;
+  img {
+    object-fit: cover;
+    height: auto;
+    aspect-ratio: 16 / 8;
+    width: 100%;
+  }
 `;
 
 const Details = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -40,6 +48,10 @@ const Details = styled.div`
     rgba(0, 0, 0, 0.74) 46%,
     rgba(0, 0, 0, 0) 66%
   );
+  @media screen and (min-width: 0px) and (max-width: 1000px) {
+    position: static;
+    background: #000;
+  }
 `;
 const Group = styled.div`
   margin: 5%;
@@ -78,7 +90,7 @@ const Buttons = styled.div`
 const PlayBtn = styled.button`
   background-color: ${(p) => p.theme.color.main};
   color: white;
-  width: 15vw;
+  width: 200px;
   max-width: 200px;
   border: none;
   margin-right: 0.5rem;
@@ -97,8 +109,17 @@ const PlayBtn = styled.button`
     font-size: 1.75rem;
     margin-right: 0.5rem;
   }
+
   &:hover {
     background-color: ${(p) => p.theme.color.mainDark};
+  }
+
+  @media screen and (min-width: 0px) and (max-width: 1000px) {
+    font-size: 0.9rem;
+    svg {
+      margin-right: 0.25rem;
+      font-size: 1.25rem;
+    }
   }
 `;
 
@@ -113,6 +134,9 @@ const WatchListBtn = styled(PlayBtn)`
 const Desc = styled.p`
   width: 56%;
   margin-top: 1.7rem !important;
+  @media screen and (min-width: 0px) and (max-width: 1000px) {
+    width: 100%;
+  }
 `;
 
 function Detail() {
@@ -149,7 +173,8 @@ function Detail() {
   return (
     <Container>
       {isSuccess && (
-        <Wrapper bg={data?.data[0]?.poster}>
+        <Wrapper>
+          <img src={data?.data[0]?.poster} alt="" />
           <Details>
             <Group>
               <Buttons>
