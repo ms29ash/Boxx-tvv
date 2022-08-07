@@ -48,19 +48,23 @@ const NavLink = styled(Link)`
   text-decoration: none;
   width: 8rem;
   font-weight: bold;
-    background-color: ${(p) => p.theme.color.main};
+  border-radius: 8px;
+  background-color: ${(p) => p.theme.color.main};
   transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
-  
+
   &:hover {
-   
+    background-color: ${(p) => p.theme.color.mainDark};
   }
   @media screen and (min-width: 0px) and (max-width: 1024px) {
     display: none;
   }
 `;
 const NavBtn = styled(NavLink)`
-color:${(p) => p.theme.color.main};
-background:#fff;
+  color: ${(p) => p.theme.color.main};
+  background: #fff;
+  &:hover {
+    background-color: #f2f2f2;
+  }
 `;
 const Menu = styled.div`
   display: none;
