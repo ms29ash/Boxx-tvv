@@ -13,7 +13,6 @@ import { BiHelpCircle, BiLogIn, BiCategory } from "react-icons/bi";
 import { useSelector, useDispatch } from 'react-redux';
 import { setOpen } from '../features/menu/menuSlice';
 import { MdOutlineMovie } from "react-icons/md";
-// eslint-disable-next-line no-unused-vars
 import { RiMovieLine } from "react-icons/ri";
 import { FaSignOutAlt } from "react-icons/fa";
 
@@ -117,7 +116,7 @@ function SideMenu() {
   const { pathname } = useLocation();
 
   const closeMenu = () => {
-    dispatch(setOpen);
+    dispatch(setOpen());
   }
 
 
