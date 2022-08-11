@@ -5,6 +5,8 @@ import List from "./Page/List";
 import Page from "./Components/Page";
 import Detail from "./Page/Detail";
 import Channel from "./Page/Channel";
+import Signin from "./Page/Signin";
+import Signup from "./Page/Signup";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
           <Route path="categories" element={<List />} />
           <Route path="details" element={<Detail />} />
         </Route>
+        <Route path="signin" element={<Signin />} />
+        <Route path="signup" element={<Signup />} />
       </Routes>
     </>
   );

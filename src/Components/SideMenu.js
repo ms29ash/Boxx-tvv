@@ -206,7 +206,7 @@ function SideMenu() {
               </Icon>
               <p>Sign Out</p>
             </Opt>) :
-              (<Opt to="/">
+              (<Opt to="/signin">
                 <Icon>
                   <BiLogIn />{" "}
                 </Icon>

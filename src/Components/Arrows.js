@@ -15,14 +15,14 @@ const Container = styled.div`
   justify-content: center;
   cursor: pointer;
   &:disabled {
-    background: #ffffff51 !important;
+    background: #ffffff26 !important;
   }
   svg {
     color: #000 !important;
     font-size: 2rem;
   }
   &:hover {
-    background: rgb(136, 135, 135);
+    background: rgb(199, 199, 199);
   }
 `;
 const Wrapper = styled(Container)`

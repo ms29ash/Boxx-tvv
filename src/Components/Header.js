@@ -157,7 +157,7 @@ function Header() {
           </User>
         ) : (
           <Register>
-            <NavLink to="/login" value="shows" location={title}>
+            <NavLink to="/signin" value="shows" location={title}>
               Login
             </NavLink>
 
