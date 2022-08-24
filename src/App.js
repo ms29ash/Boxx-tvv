@@ -25,6 +25,11 @@ function App() {
             <Route path=":id" element={<Detail />} />
 
           </Route>
+          <Route path="anime" >
+            <Route index element={<List />} />
+            <Route path=":id" element={<Detail />} />
+
+          </Route>
           <Route path="channels" >
             <Route path=":name" element={<Channel />} />
 

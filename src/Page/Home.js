@@ -15,7 +15,7 @@ function Home() {
             <Categories />
             <ImageSlider title='movies' />
             <ImageSlider title='shows' />
-            <ImageSlider title='movies' />
+            <ImageSlider title='anime' />
         </div>
     )
 }

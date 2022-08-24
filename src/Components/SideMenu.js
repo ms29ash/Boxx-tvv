@@ -9,12 +9,13 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
-import { BiHelpCircle, BiLogIn, BiCategory } from "react-icons/bi";
+import { BiHelpCircle, BiLogIn } from "react-icons/bi";
 import { useSelector, useDispatch } from 'react-redux';
 import { setOpen } from '../features/menu/menuSlice';
 import { MdOutlineMovie } from "react-icons/md";
 import { RiMovieLine } from "react-icons/ri";
 import { FaSignOutAlt } from "react-icons/fa";
+import { MdOutlineAnimation } from "react-icons/md";
 
 const Container = styled.div`
   width: 30vw;
@@ -135,12 +136,6 @@ function SideMenu() {
                 </Icon>
                 <p>Home</p>
               </Opt>
-              <Opt to="/categories" onClick={closeMenu} selected={pathname === '/categories' || pathname === '/h'}>
-                <Icon>
-                  <BiCategory />
-                </Icon>
-                <p>Categories</p>
-              </Opt>
               <Opt to="/movies" onClick={closeMenu} selected={pathname === '/movies'}>
                 <Icon>
                   <MdOutlineMovie />
@@ -152,6 +147,12 @@ function SideMenu() {
                   <RiMovieLine />
                 </Icon>
                 <p>Shows</p>
+              </Opt>
+              <Opt to="/anime" onClick={closeMenu} selected={pathname === '/anime'}>
+                <Icon>
+                  <MdOutlineAnimation />
+                </Icon>
+                <p>Anime</p>
               </Opt>
 
 
