@@ -1,13 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import Heading from "./Heading";
 
 const Container = styled.div`
   margin: 0 auto;
-  width: 90%;
-  h3 {
-    margin: 0 1%;
-    text-transform: capitalize;
-  }
+  width: 95%;
 `;
 
 const Wrapper = styled.div`
@@ -16,13 +13,14 @@ const Wrapper = styled.div`
 `;
 
 const Wrap = styled.div`
-  width: 19%;
-  margin: 1%;
+  width: 19.5%;
+  margin: 0.5%;
   display: grid;
   place-items: center;
   border-radius: 10px;
-  aspect-ratio: 3/2;
+  aspect-ratio: 4/5;
   border: 2px solid #180f11;
+  overflow: hidden;
 
   transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
   position: relative;
@@ -45,26 +43,34 @@ const Wrap = styled.div`
     object-fit: cover;
     width: 100%;
     height: 100%;
-    border-radius: 10px;
     opacity: 1;
   }
   p {
     display: grid;
     place-items: center;
     z-index: 3;
-    border-radius: 10px;
     font-weight: bold;
     font-size: 1.25rem;
     height: 100%;
     width: 100%;
     background: radial-gradient(rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.5) 100%);
+    @media screen and (max-width: 650px) and (min-width: 0){
+      background: radial-gradient(rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.5) 90%);
+      font-size: 0.75rem;
+
+    }
+    @media screen and (max-width: 768px) and (min-width: 0){
+      border-radius: 5px;
+
+    }
   }
 `;
 
 function Categories() {
   return (
     <Container>
-      <h3>Categories</h3>
+      <Heading>Categories
+      </Heading>
       <Wrapper>
         <Wrap>
           <img

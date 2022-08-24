@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom'
+import Heading from "./Heading";
 
 const Container = styled.div`
   width: 100%;
@@ -12,15 +13,16 @@ const Container = styled.div`
   @media screen and (max-width: 720px) and (min-width: 0) {
     height: 10vh;
   }
+  @media screen and (max-width: 500px) and (min-width: 0) {
+    
+    margin: 1.25rem 0 3rem;
+  }
 `;
 
 const ChannelContainer = styled.div`
-width: 90%;
+width: 95%;
 height:100%;
   margin: 0 auto;
-  h3{
-    margin:1rem;
-  }
   `;
 const Wrapper = styled.div`
   display: flex;
@@ -48,6 +50,10 @@ const Wrapper = styled.div`
     @media screen and (max-width: 1200px) and (min-width: 0) {
       margin: 0.25rem;
     }
+    @media screen and (max-width: 768px) and (min-width: 0){
+      border-radius: 5px;
+
+    }
     &:hover {
       transform: scale(1.1);
       border: 2px solid #f20544;
@@ -64,7 +70,7 @@ function Channels() {
   return (
     <Container>
       <ChannelContainer>
-        <h3>Channels</h3>
+        <Heading>Channels</Heading>
         <Wrapper>
           <div onClick={() => { navigate('/channels/disney+') }}>
             <img src="./images/disney+-logo.png" alt="" />

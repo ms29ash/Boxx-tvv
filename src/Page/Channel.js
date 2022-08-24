@@ -7,15 +7,17 @@ const Container = styled.div``;
 
 const TopBackground = styled.div`
   width: 100%;
-  aspect-ratio: 16/4;
+  aspect-ratio: 8/1;
   background: url(${(p) => `/images/${p.bg}-background.jpg`}) no-repeat center
     center/cover;
   position: relative;
   margin-bottom: 5rem;
   z-index: -1;
+  @media screen and (min-width: 0px) and (max-width:1024px){
+    aspect-ratio:5/1;
+  }
   &:before {
     position: absolute;
-    /* z-index: 1; */
     content: "";
     top: 0;
     right: 0;
@@ -32,7 +34,7 @@ const Img = styled.div`
   position: absolute;
   top: 70%;
   left: 5%;
-  height: 40%;
+  height: 60%;
   min-height: 80px;
   aspect-ratio: 1/1;
   display: flex;

@@ -7,16 +7,22 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "../axios";
 import Card from "./Card";
 import LeftArrow, { RightArrow } from "./Arrows";
+import Heading from "./Heading";
+
 
 const Container = styled.div`
-  margin: 2.5rem auto;
+  margin: 2rem auto;
   overflow: visible;
-  @media screen and (min-width: 0px) and (max-width: 720px) {
-    margin: 3rem auto;
+ 
+  @media screen and (max-width: 768px) and (min-width: 0) {
+    
+    margin: 1rem auto;
   }
-  h3 {
-    margin: 0 5%;
-    text-transform: capitalize;
+  h3{
+     @media screen and (min-width: 768px) and (max-width: 720000px) { 
+       margin-left: 3rem;
+    /* margin: 3rem auto; */
+  } 
   }
 `;
 const Carousel = styled(Slider)`
@@ -109,7 +115,7 @@ function ImageSlider({ title }) {
 
   return (
     <Container>
-      <h3>{title}</h3>
+      <Heading>{title}</Heading>
       <Carousel {...settings}>
         {isSuccess &&
           data?.data.map((item) => (
