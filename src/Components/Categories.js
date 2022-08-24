@@ -1,80 +1,97 @@
-import React from 'react'
-import styled from 'styled-components';
-import "slick-carousel/slick/slick.css";
-
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
-
-
+import React from "react";
+import styled from "styled-components";
 
 const Container = styled.div`
-/* width:100%;
-height:50vh; */
-margin:0 auto;
-`
-const Carousel = styled(Slider)`
-margin-top:20px;
-overflow-x: visible;
-ul li button{
-    &:before{
-        font-size:10px;
-        color:rgb( 150 ,158,171);
-    }
-}
-.slick-dots li.slick-active button:before{
-    color:white;
-}
+  margin: 0 auto;
+  width: 90%;
+  h3 {
+    margin: 0 1%;
+    text-transform: capitalize;
+  }
+`;
 
-button {
-    z-index: 1;
-}
-`
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+`;
 
 const Wrap = styled.div`
-    /* overflow-x:hidden; */
-    img{
-        width:100%;
-        object-fit:cover;
-        border-radius:14px;
-        margin:0px 1%;
-    /* height:50vh; */
-    box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px , rgb(0 0 0 / 73%) 0px 16px 10px -10px ;
-    border:4px solid transparent;
-    cursor:pointer;
-    transition-duration:300ms;
-    &:hover{
-        border:4px solid rgb(249 ,249 ,249 ,0.8);
+  width: 19%;
+  margin: 1%;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  aspect-ratio: 3/2;
+  border: 2px solid #180f11;
+
+  transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+  position: relative;
+  cursor: pointer;
+  &:hover {
+    border: 2px solid ${(p) => p.theme.color.main};
+    p {
+      background: radial-gradient(rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.5) 90%);
     }
-}`
+    img {
+      opacity: 1;
+    }
+  }
+  img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    opacity: 1;
+  }
+  p {
+    display: grid;
+    place-items: center;
+    z-index: 3;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.25rem;
+    height: 100%;
+    width: 100%;
+    background: radial-gradient(rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.5) 100%);
+  }
+`;
 
 function Categories() {
-    let settings = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 3
-    }
-    return (
-        <Container>
-            <Carousel {...settings}>
-                <Wrap>
-                    <img src="/images/avatar.jpg" alt="" />
-                </Wrap>
-                <Wrap>
-                    <img src="/images/avengers.jpg" alt="" />
-                </Wrap>
-                <Wrap>
-                    <img src="/images/highway.jpg" alt="" />
-                </Wrap>
-                <Wrap>
-                    <img src="/images/extraction.jpg" alt="" />
-                </Wrap>
-
-            </Carousel>
-        </Container>
-
-
-    )
+  return (
+    <Container>
+      <h3>Categories</h3>
+      <Wrapper>
+        <Wrap>
+          <img
+            src="https://wallup.net/wp-content/uploads/2017/11/22/393344-video_games-Call_of_Duty-Call_of_Duty_Infinite_Warfare-748x421.jpg"
+            alt=""
+          />
+          <p> Action</p>
+        </Wrap>
+        <Wrap>
+          <img src="https://wallpapercave.com/wp/wp1879136.jpg" alt="" />
+          <p> Adventure</p>
+        </Wrap>
+        <Wrap>
+          <img src="https://wallpaperaccess.com/full/234124.jpg" alt="" />
+          <p>Sci-fi</p>
+        </Wrap>
+        <Wrap>
+          <img src="https://cdn.wallpapersafari.com/38/98/htY5BF.jpg" alt="" />
+          <p> Thriller</p>
+        </Wrap>
+        <Wrap>
+          <img src="https://wallpaperaccess.com/full/2015454.jpg" alt="" />
+          <p> Crime</p>
+        </Wrap>
+      </Wrapper>
+    </Container>
+  );
 }
 
 export default Categories;
