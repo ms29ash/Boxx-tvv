@@ -14,6 +14,7 @@ import {
   addToWatchlist,
   removefromWatchlist,
 } from "../features/watchlist/watchlistSlice";
+import ImageSlider from "../Components/ImageSlider";
 
 const Container = styled.div`
   width: 100%;
@@ -171,52 +172,55 @@ function Detail() {
   };
 
   return (
-    <Container>
-      {isSuccess && (
-        <Wrapper>
-          <img src={data?.data[0]?.poster} alt="" />
-          <Details>
-            <Group>
-              <Buttons>
-                {index < 0 ? (
-                  <WatchListBtn
-                    onClick={() => {
-                      addtoWatchList(data?.data[0]);
-                    }}>
-                    <AiOutlinePlusCircle /> Add to Watchlist
-                  </WatchListBtn>
-                ) : (
-                  <WatchListBtn
-                    onClick={() => {
-                      removeFromWatchList(index);
-                    }}>
-                    <AiOutlineCheckCircle /> Added to Watchlist
-                  </WatchListBtn>
-                )}
-                <PlayBtn>
-                  <AiOutlinePlayCircle /> Play Now
-                </PlayBtn>
-              </Buttons>
-              <h2>{data?.data[0].name}</h2>
+    <>
+      <Container>
+        {isSuccess && (
+          <Wrapper>
+            <img src={data?.data[0]?.poster} alt="" />
+            <Details>
+              <Group>
+                <Buttons>
+                  {index < 0 ? (
+                    <WatchListBtn
+                      onClick={() => {
+                        addtoWatchList(data?.data[0]);
+                      }}>
+                      <AiOutlinePlusCircle /> Add to Watchlist
+                    </WatchListBtn>
+                  ) : (
+                    <WatchListBtn
+                      onClick={() => {
+                        removeFromWatchList(index);
+                      }}>
+                      <AiOutlineCheckCircle /> Added to Watchlist
+                    </WatchListBtn>
+                  )}
+                  <PlayBtn>
+                    <AiOutlinePlayCircle /> Play Now
+                  </PlayBtn>
+                </Buttons>
+                <h2>{data?.data[0].name}</h2>
 
-              <List>
-                <p>{data?.data[0].time}</p>
-                {data?.data[0].seasons && (
-                  <p>{data?.data[0].seasons} Seasons</p>
-                )}
-                <GiPlainCircle />
-                <p>{data?.data[0].year}</p>
-                <GiPlainCircle />
-                <p>{data?.data[0].category}</p>
-              </List>
+                <List>
+                  <p>{data?.data[0].time}</p>
+                  {data?.data[0].seasons && (
+                    <p>{data?.data[0].seasons} Seasons</p>
+                  )}
+                  <GiPlainCircle />
+                  <p>{data?.data[0].year}</p>
+                  <GiPlainCircle />
+                  <p>{data?.data[0].category}</p>
+                </List>
 
-              {data?.data[0].cast && <p> Starring: {data?.data[0].cast}</p>}
-              <Desc>{data?.data[0].description}</Desc>
-            </Group>
-          </Details>
-        </Wrapper>
-      )}
-    </Container>
+                {data?.data[0].cast && <p> Starring: {data?.data[0].cast}</p>}
+                <Desc>{data?.data[0].description}</Desc>
+              </Group>
+            </Details>
+          </Wrapper>
+        )}
+      </Container>
+      <ImageSlider title={path[1]} />
+    </>
   );
 }
 
