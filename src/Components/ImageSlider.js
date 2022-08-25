@@ -21,7 +21,6 @@ const Container = styled.div`
   h3{
      @media screen and (min-width: 768px) and (max-width: 720000px) { 
        margin-left: 3rem;
-    /* margin: 3rem auto; */
   } 
   }
 `;
@@ -62,7 +61,6 @@ const Carousel = styled(Slider)`
 `;
 
 const Wrap = styled.div`
-  cursor: pointer;
   position: relative;
   cursor: pointer;
   overflow: visible;
@@ -94,12 +92,16 @@ function ImageSlider({ title }) {
     rows: 1,
     nextArrow: <RightArrow />,
     prevArrow: <LeftArrow />,
+    initialSide: 0,
+    swipeToSlide: true,
 
     responsive: [
       {
         breakpoint: 1024,
         settings: {
+          initialSide: 0,
           slidesToShow: 3,
+          slidesToScroll: 3,
         },
       },
     ],
