@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import SideMenu from './SideMenu'
 import { Outlet } from 'react-router-dom'
 import Header from './Header';
+import Footer from './Footer';
 
 const Container = styled.div`
 display:flex;
@@ -29,7 +30,9 @@ function Page() {
             <Main>
                 <Header />
                 <Outlet />
+                <Footer />
             </Main>
+
         </Container>
     )
 }
