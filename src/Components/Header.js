@@ -117,7 +117,7 @@ const Profile = styled.div`
 function Header() {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.menu.isOpen);
-  const user = useSelector((state) => state.user.user);
+  const userToken = useSelector((state) => state.user.token);
 
   const { pathname } = useLocation();
   const title = pathname.replace("/", "");
@@ -141,7 +141,17 @@ function Header() {
           </Logo>
         </NavLinks>
 
-        {user ? (
+        {userToken === '' ? (
+          <Register>
+            <NavLink to="/signin" value="shows" location={title}>
+              Login
+            </NavLink>
+
+            <NavBtn to="/signup" value="shows" location={title}>
+              Join Now
+            </NavBtn>
+          </Register>
+        ) : (
           <User>
             <Input>
               <AiOutlineSearch />
@@ -150,21 +160,11 @@ function Header() {
 
             <Profile>
               <img
-                src="https://www.dmarge.com/wp-content/uploads/2021/01/dwayne-the-rock--480x320.jpg"
+                src="https://secure.gravatar.com/avatar/8bb211a1d66efabb5fe4b267f7f6fcd8/?s=48&d=https://images.binaryfortress.com/General/UnknownUser1024.png"
                 alt=""
               />
             </Profile>
           </User>
-        ) : (
-          <Register>
-            <NavLink to="/signin" value="shows" location={title}>
-              Login
-            </NavLink>
-
-            <NavBtn to="/subscribe" value="shows" location={title}>
-              Join Now
-            </NavBtn>
-          </Register>
         )}
       </Container>
     </Nav>

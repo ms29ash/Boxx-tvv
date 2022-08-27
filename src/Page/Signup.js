@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
 
 const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.653);
@@ -55,10 +57,13 @@ const Form = styled.form`
     width: 95%;
     font-size: 1rem;
     padding: 0.75rem 2.5%;
-    margin: 0.25rem 0;
+    margin: 0.25rem 0 0;
     border: none;
     outline: none;
     font-size: 1rem;
+  }
+  span{
+  height:1rem;
   }
   button {
     padding: 0.75rem 0;
@@ -95,6 +100,14 @@ const Form = styled.form`
 `;
 
 export default function Signup() {
+  const navigate = useNavigate();
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = data => {
+    sessionStorage.setItem("email", data.email);
+    navigate('password')
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -104,9 +117,16 @@ export default function Signup() {
         <h1>
           Unlimited movies, TV shows , <br /> Different OTT Platforms and more.
         </h1>
-        <Form>
-          <label htmlFor="email">Email</label>
-          <input type="text" id="email" />
+        <Form onSubmit={handleSubmit(onSubmit)} >
+          <label htmlFor="email" >Email</label>
+          <input type="text" id="email" {...register("email", {
+            required: "email is required",
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: "Entered value does not match email format"
+            }
+          })} />
+          <span>{errors.email && errors.email.message}</span>
 
           <button type="submit">Continue</button>
           <p>

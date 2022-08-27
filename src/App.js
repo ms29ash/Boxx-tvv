@@ -7,6 +7,9 @@ import Detail from "./Page/Detail";
 import Channel from "./Page/Channel";
 import Signin from "./Page/Signin";
 import Signup from "./Page/Signup";
+import Password from "./Page/Password";
+import Otp from "./Page/Otp";
+import Categories from "./Page/Category";
 
 function App() {
   return (
@@ -35,11 +38,22 @@ function App() {
 
           </Route>
 
-          <Route path="categories" element={<List />} />
+          <Route path="category" >
+            <Route path="action" element={<Categories />} />
+            <Route path="adventure" element={<Categories />} />
+            <Route path="sci-fi" element={<Categories />} />
+            <Route path="thriller" element={<Categories />} />
+            <Route path="crime" element={<Categories />} />
+          </Route>
           <Route path="details" element={<Detail />} />
         </Route>
         <Route path="signin" element={<Signin />} />
-        <Route path="signup" element={<Signup />} />
+        <Route path="signup"  >
+          <Route index element={<Signup />} />
+          <Route path="password" element={<Password />} />
+          <Route path="otp" element={<Otp />} />
+        </Route>
+
       </Routes>
     </>
   );

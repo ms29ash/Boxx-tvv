@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'https://boxx-tv.herokuapp.com//'
+    baseURL: 'https://boxx-tvv.herokuapp.com/'
 
 })
 
