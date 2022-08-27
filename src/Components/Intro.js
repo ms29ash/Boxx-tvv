@@ -40,7 +40,7 @@ const Wrap = styled.div`
    
 }`
 
-function Intro() {
+function Intro({ type }) {
     let settings = {
         dots: false,
         infinite: true,
@@ -54,18 +54,14 @@ function Intro() {
     return (
         <Container>
             <Carousel {...settings}>
-                <Wrap>
-                    <img src="/images/avatar.jpg" alt="" />
-                </Wrap>
-                <Wrap>
-                    <img src="/images/avengers.jpg" alt="" />
-                </Wrap>
-                <Wrap>
-                    <img src="/images/highway.jpg" alt="" />
-                </Wrap>
-                <Wrap>
-                    <img src="/images/extraction.jpg" alt="" />
-                </Wrap>
+                {
+                    Array(4).fill().map((k, i) => {
+                        return <Wrap>
+                            <img src={`/images/${type}/${i + 1}.jpg`} alt="" />
+                        </Wrap>
+                    })
+                }
+
 
             </Carousel>
         </Container>
@@ -75,3 +71,7 @@ function Intro() {
 }
 
 export default Intro
+
+Intro.defaultProps = {
+    type: "movies"
+};

@@ -10,7 +10,7 @@ import ImageSlider from '../Components/ImageSlider'
 function Home() {
     return (
         <div>
-            <Intro />
+            <Intro type='movies' />
             <Channels />
             <Categories />
             <ImageSlider title='movies' />

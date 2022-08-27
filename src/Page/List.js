@@ -63,7 +63,7 @@ function List() {
   const { data, isSuccess } = useQuery([`${title}`], () => fetchData(pathname));
   return (
     <Page>
-      <Intro />
+      <Intro type={title} />
       <Container>
         <h1>{title}</h1>
         <Wrapper>
