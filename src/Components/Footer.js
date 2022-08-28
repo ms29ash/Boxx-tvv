@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
 background:rgb(21, 21, 21);
@@ -42,7 +43,7 @@ flex:0.6;
     width:90%;
     }
     div{
-   p{
+   a{
       font-size: 1.25rem;
       margin: 0.7rem 0;
       cursor: pointer;
@@ -66,19 +67,19 @@ function Footer() {
 
                 <Group>
                     <div>
-                        <p>Movies</p>
-                        <p>Shows</p>
-                        <p>Anime</p>
+                        <Link to="/movies" >Movies</Link>
+                        <Link to="/shows" >Shows</Link>
+                        <Link to="/anime" >Anime</Link>
                     </div>
                     <div>
-                        <p>Recent</p>
-                        <p>Favourite</p>
-                        <p>Bookmarks</p>
+                        <Link to="/recent" >Recent</Link>
+                        <Link to="/favorite" >Favourite</Link>
+                        <Link to="/bookmark" >Bookmarks</Link>
                     </div>
                     <div>
-                        <p>Facebook</p>
-                        <p>Instagram</p>
-                        <p>Twitter</p>
+                        <Link to="/" >Facebook</Link>
+                        <Link to="/" >Instagram</Link>
+                        <Link to="/" >Twitter</Link>
                     </div>
                 </Group>
             </Wrapper>
