@@ -118,10 +118,9 @@ export default function Password() {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post('auth/signup', { username: email, email: email, password: data.password });
-      console.log(res);
 
       if (res.data && res?.data?.success === true) {
-        cookies.set('authToken', res?.data.authToken, { path: '/' });
+        cookies.set('authToken', res?.data.authToken, { path: '/', maxAge: 900 });
         navigate('/signup/otp', { replace: true });
       }
     } catch (error) {

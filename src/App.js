@@ -1,20 +1,31 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import React from 'react'
+import { Routes, Route } from "react-router-dom";
 import Home from "./Page/Home";
 import List from "./Page/List";
 import Page from "./Components/Page";
 import Detail from "./Page/Detail";
 import Channel from "./Page/Channel";
+import Categories from "./Page/Category";
 import Signin from "./Page/Signin";
 import Signup from "./Page/Signup";
 import Password from "./Page/Password";
 import Otp from "./Page/Otp";
-import Categories from "./Page/Category";
+import NotFound from './Page/NotFound'
+import Auth from "./Components/Auth";
+
 
 function App() {
+
+
   return (
     <>
+
+
+
+
       <Routes>
+
 
         <Route path="/" element={<Page />}>
           <Route index element={<Home />} />
@@ -47,13 +58,16 @@ function App() {
           </Route>
           <Route path="details" element={<Detail />} />
         </Route>
-        <Route path="signin" element={<Signin />} />
-        <Route path="signup"  >
+
+        <Route path="*" element={<NotFound />} />
+        <Route path="signin" element={<Auth />} >
+          <Route index element={<Signin />} />
+        </Route>
+        <Route path="signup" element={<Auth />}  >
           <Route index element={<Signup />} />
           <Route path="password" element={<Password />} />
           <Route path="otp" element={<Otp />} />
         </Route>
-
       </Routes>
     </>
   );

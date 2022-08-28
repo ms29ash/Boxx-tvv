@@ -4,6 +4,8 @@ import SideMenu from './SideMenu'
 import { Outlet } from 'react-router-dom'
 import Header from './Header';
 import Footer from './Footer';
+import GetUser from './GetUser';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
 display:flex;
@@ -24,16 +26,24 @@ width:69vw;
 `;
 
 function Page() {
+    const signedIn = useSelector(state => state.user.signedIn);
     return (
-        <Container>
-            <SideMenu />
-            <Main>
-                <Header />
-                <Outlet />
-                <Footer />
-            </Main>
+        <>
 
-        </Container>
+            <GetUser />
+            {
+                signedIn === true &&
+
+                (<Container>
+                    <SideMenu />
+                    <Main>
+                        <Header />
+                        <Outlet />
+                        <Footer />
+                    </Main>
+                </Container>)
+            }
+        </>
     )
 }
 

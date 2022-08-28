@@ -117,7 +117,7 @@ const Profile = styled.div`
 function Header() {
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.menu.isOpen);
-  const userToken = useSelector((state) => state.user.token);
+  const signedIn = useSelector((state) => state.user.signedIn);
 
   const { pathname } = useLocation();
   const title = pathname.replace("/", "");
@@ -141,7 +141,7 @@ function Header() {
           </Logo>
         </NavLinks>
 
-        {userToken === '' ? (
+        {signedIn === false ? (
           <Register>
             <NavLink to="/signin" value="shows" location={title}>
               Login

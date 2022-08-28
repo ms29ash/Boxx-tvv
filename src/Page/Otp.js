@@ -5,8 +5,6 @@ import { CgProfile } from "react-icons/cg";
 import { useForm } from "react-hook-form";
 import axios from "../axios";
 import Cookies from 'universal-cookie';
-import { addUser } from '../features/user/userSlice'
-import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.593);
@@ -110,7 +108,6 @@ const Form = styled.form`
 
 export default function Otp() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const cookies = new Cookies();
   const email = sessionStorage.getItem("email");
   const {
@@ -122,9 +119,9 @@ export default function Otp() {
     try {
       const authToken = cookies.get('authToken')
       const res = await axios.put("auth/verify", { token: authToken, otp: data.otp });
-      console.log(res);
+
       if (res.data && res?.data?.success === true) {
-        dispatch(addUser(res?.data.token));
+        cookies.set('token', res?.data.token, { path: '/', maxAge: 1296000 });
         navigate('/', { replace: true });
       }
     } catch (error) {
