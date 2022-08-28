@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Heading from "./Heading";
+import { Link } from 'react-router-dom'
 
 const Container = styled.div`
   margin: 0 auto;
@@ -12,7 +13,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const Wrap = styled.div`
+const Wrap = styled(Link)`
   width: 19.5%;
   margin: 0.5%;
   display: grid;
@@ -25,6 +26,8 @@ const Wrap = styled.div`
   transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
   position: relative;
   cursor: pointer;
+  text-decoration:none;
+  color:#fff;
   &:hover {
     border: 2px solid ${(p) => p.theme.color.main};
     p {
@@ -72,26 +75,26 @@ function Categories() {
       <Heading>Categories
       </Heading>
       <Wrapper>
-        <Wrap>
+        <Wrap to="category/action" >
           <img
             src="https://wallup.net/wp-content/uploads/2017/11/22/393344-video_games-Call_of_Duty-Call_of_Duty_Infinite_Warfare-748x421.jpg"
             alt=""
           />
           <p> Action</p>
         </Wrap>
-        <Wrap>
+        <Wrap to="category/adventure" >
           <img src="https://wallpapercave.com/wp/wp1879136.jpg" alt="" />
           <p> Adventure</p>
         </Wrap>
-        <Wrap>
+        <Wrap to="category/sci-fi" >
           <img src="https://wallpaperaccess.com/full/234124.jpg" alt="" />
           <p>Sci-fi</p>
         </Wrap>
-        <Wrap>
+        <Wrap to="category/thriller" >
           <img src="https://cdn.wallpapersafari.com/38/98/htY5BF.jpg" alt="" />
           <p> Thriller</p>
         </Wrap>
-        <Wrap>
+        <Wrap to="category/crime" >
           <img src="https://wallpaperaccess.com/full/2015454.jpg" alt="" />
           <p> Crime</p>
         </Wrap>
