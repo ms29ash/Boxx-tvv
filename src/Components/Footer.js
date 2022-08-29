@@ -43,9 +43,13 @@ flex:0.6;
     width:90%;
     }
     div{
+        display:flex;
+        flex-direction: column;
    a{
       font-size: 1.25rem;
       margin: 0.7rem 0;
+      text-decoration:none;
+      color:#fff;
       cursor: pointer;
       @media screen and(max-width: 1024px) and(min-width: 0){
           font-size: 1rem;
