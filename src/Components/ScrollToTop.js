@@ -7,11 +7,15 @@ export default function ScrollToTop() {
     useEffect(() => {
 
         const scrollToTop = () => {
-            document.getElementById('scroll').scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        };
+            const scroll = document.getElementById('scroll')
+            if (scroll) {
+
+                scroll.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            };
+        }
         scrollToTop();
     }, [pathname]);
 
