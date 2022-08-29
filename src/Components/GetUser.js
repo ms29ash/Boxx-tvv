@@ -19,7 +19,6 @@ function GetUser() {
             try {
                 if (signedIn === false) {
                     const token = cookies.get('token')
-                    console.log(token)
                     if (token) {
 
                         const response = await axios.post('/auth/user', { token: token });
