@@ -56,7 +56,7 @@ function Intro({ type }) {
             <Carousel {...settings}>
                 {
                     Array(4).fill().map((k, i) => {
-                        return <Wrap>
+                        return <Wrap key={i} >
                             <img src={`/images/${type}/${i + 1}.jpg`} alt="" />
                         </Wrap>
                     })
