@@ -36,7 +36,7 @@ function Page() {
 
                 (<Container>
                     <SideMenu />
-                    <Main>
+                    <Main id="scroll" >
                         <Header />
                         <Outlet />
                         <Footer />

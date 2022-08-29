@@ -13,6 +13,7 @@ import Password from "./Page/Password";
 import Otp from "./Page/Otp";
 import NotFound from './Page/NotFound'
 import Auth from "./Components/Auth";
+import ScrollToTop from "./Components/ScrollToTop";
 
 
 function App() {
@@ -20,10 +21,7 @@ function App() {
 
   return (
     <>
-
-
-
-
+      <ScrollToTop />
       <Routes>
 
 
