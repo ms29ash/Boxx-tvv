@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import axios from '../axios'
+import Cookies from 'universal-cookie';
 
 const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.593);
@@ -56,6 +59,9 @@ const Form = styled.form`
     outline: none;
     font-size: 1rem;
   }
+  span{
+  height:1rem;
+  }
   button {
     padding: 0.75rem 0;
     margin: 0.5rem 0;
@@ -91,18 +97,52 @@ const Form = styled.form`
 `;
 
 export default function Signin() {
+  const cookies = new Cookies();
+  const navigate = useNavigate();
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = async (data) => {
+    try {
+      const res = await axios.post('auth/signin', { email: data.email, password: data.password });
+
+      if (res.data && res?.data?.success === true) {
+        cookies.set('token', res?.data.token, { path: '/', maxAge: 1296000 });
+        navigate('/', { replace: true });
+      }
+    } catch (error) {
+      if (error) {
+        console.log(error)
+        return;
+      }
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
         <Logo to="/">
           <img src="./images/Logo.png" alt="" />
         </Logo>
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <h2>Login</h2>
           <label htmlFor="email">Email</label>
-          <input type="text" id="email" />
+          <input type="text" id="email" {...register("email", {
+            required: "email is required",
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: "Entered value does not match email format"
+            }
+          })} />
+          <span>{errors.email && errors.email.message}</span>
           <label htmlFor="password">Password</label>
-          <input type="password" id="password" />
+          <input type="password" id="password"  {...register('password', {
+            required: "password is required",
+            minLength: {
+              value: 6,
+              message: "min length is 5"
+            }
+          })} />
+          <span>{errors.password && errors.password.message}</span>
           <small>forget password?</small>
           <button type="submit">Login</button>
           <p>
