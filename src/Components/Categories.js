@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Heading from "./Heading";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -19,7 +19,7 @@ const Wrap = styled(Link)`
   display: grid;
   place-items: center;
   border-radius: 10px;
-  aspect-ratio: 4/5;
+  aspect-ratio: 4/4;
   border: 2px solid #180f11;
   overflow: hidden;
 
@@ -28,26 +28,31 @@ const Wrap = styled(Link)`
   cursor: pointer;
   text-decoration:none;
   color:#fff;
+  background: hsla(339, 100%, 55%, 1);
+ 
+  
+  ${(p) => p.no === 2 && ` background:background: `}
+  ${(p) =>
+    p.no === 3 &&
+    ` background:
+    `}
+  ${(p) =>
+    p.no === 4 &&
+    `   background: ;
+    `}
+  ${(p) =>
+    p.no === 5 &&
+    ` background: ;
+    `}
+
+     
+
+
   &:hover {
     border: 2px solid ${(p) => p.theme.color.main};
-    p {
-      background: radial-gradient(rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.5) 90%);
-    }
-    img {
-      opacity: 1;
-    }
+   
   }
-  img {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    opacity: 1;
-  }
+  
   p {
     display: grid;
     place-items: center;
@@ -56,12 +61,7 @@ const Wrap = styled(Link)`
     font-size: 1.25rem;
     height: 100%;
     width: 100%;
-    background: radial-gradient(rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.5) 100%);
-    @media screen and (max-width: 650px) and (min-width: 0){
-      background: radial-gradient(rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.5) 90%);
-      font-size: 0.75rem;
-
-    }
+    
     @media screen and (max-width: 768px) and (min-width: 0){
       border-radius: 5px;
 
@@ -69,35 +69,42 @@ const Wrap = styled(Link)`
   }
 `;
 
+const Action = styled(Wrap)`
+  background: ${(p) => `linear-gradient(to right, #f953c6, #b91d73);`};
+`;
+
+const Adventure = styled(Wrap)`
+  background: ${(p) => ` linear-gradient(to right, #8e2de2, #4a00e0);`};
+`;
+const SciFi = styled(Wrap)`
+  background: ${(p) => `linear-gradient(to right, #f12711, #f5af19)`};
+`;
+const Thriller = styled(Wrap)`
+  background: ${(p) => `linear-gradient(to right, #ed213a, #93291e)`};
+`;
+const Crime = styled(Wrap)`
+  background: ${(p) => ` linear-gradient(to right, #00c6ff, #0072ff);`};
+`;
 function Categories() {
   return (
     <Container>
-      <Heading>Categories
-      </Heading>
+      <Heading>Categories</Heading>
       <Wrapper>
-        <Wrap to="category/action" >
-          <img
-            src="https://wallup.net/wp-content/uploads/2017/11/22/393344-video_games-Call_of_Duty-Call_of_Duty_Infinite_Warfare-748x421.jpg"
-            alt=""
-          />
+        <Action to="category/action">
           <p> Action</p>
-        </Wrap>
-        <Wrap to="category/adventure" >
-          <img src="https://wallpapercave.com/wp/wp1879136.jpg" alt="" />
+        </Action>
+        <Adventure to="category/adventure">
           <p> Adventure</p>
-        </Wrap>
-        <Wrap to="category/sci-fi" >
-          <img src="https://wallpaperaccess.com/full/234124.jpg" alt="" />
+        </Adventure>
+        <SciFi to="category/sci-fi">
           <p>Sci-fi</p>
-        </Wrap>
-        <Wrap to="category/thriller" >
-          <img src="https://cdn.wallpapersafari.com/38/98/htY5BF.jpg" alt="" />
+        </SciFi>
+        <Thriller to="category/thriller">
           <p> Thriller</p>
-        </Wrap>
-        <Wrap to="category/crime" >
-          <img src="https://wallpaperaccess.com/full/2015454.jpg" alt="" />
+        </Thriller>
+        <Crime to="category/crime">
           <p> Crime</p>
-        </Wrap>
+        </Crime>
       </Wrapper>
     </Container>
   );
