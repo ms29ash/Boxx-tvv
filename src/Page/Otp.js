@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { useForm } from "react-hook-form";
 import axios from "../axios";
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 
 const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.593);
@@ -36,44 +36,43 @@ const Logo = styled(Link)`
   }
 `;
 
-const Wrapper = styled.div``;
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 95vh;
-
-  background-color: rgba(89, 89, 89, 0.8);
-  padding: 2rem;
-  max-width: 370px;
-  margin-bottom: 30%;
-  div {
-    align-items: center;
+const Wrapper = styled.div`
+  & > div {
     display: flex;
     flex-direction: column;
-    svg {
-      font-size: 2.5rem;
+    width: 95vh;
+    background-color: rgba(89, 89, 89, 0.8);
+    padding: 2rem;
+    max-width: 370px;
+    margin-bottom: 30%;
+    & > div {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      svg {
+        font-size: 2.5rem;
+      }
     }
+  }
+`;
+
+const Form = styled.form`
+  margin: 5% 0;
+  div {
   }
   h2 {
     margin-bottom: 1rem;
     width: 100%;
     text-align: center;
   }
-  input {
-    width: 95%;
-    font-size: 1rem;
-    padding: 0.75rem 2.5%;
-    margin: 0.25rem 0;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-  }
+
   span {
     height: 1rem;
     color: white;
   }
   button {
     padding: 0.75rem 0;
+    width: 100%;
     margin: 0.5rem 0;
     font-size: 1rem;
     background-color: ${(p) => p.theme.color.main};
@@ -105,30 +104,71 @@ const Form = styled.form`
     }
   }
 `;
+const Input = styled.div`
+  display: flex;
+  justify-content: space-between;
+  input {
+    width: 20%;
+    max-width: 70px;
+    aspect-ratio: 1/1;
+    font-size: 1rem;
+    margin: 0.75rem 0%;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    text-align: center;
+    font-size: 1.25rem;
+    &:focus {
+      outline: none;
+    }
+    &:active {
+      outline: none;
+    }
+  }
+`;
 
 export default function Otp() {
   const navigate = useNavigate();
   const cookies = new Cookies();
+  const [otp, setOtp] = useState(new Array(4).fill(""));
   const email = sessionStorage.getItem("email");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = async (data) => {
-    try {
-      const authToken = cookies.get('authToken')
-      const res = await axios.put("auth/verify", { token: authToken, otp: data.otp });
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const Otp = otp.join("");
+    console.log(Otp);
+    // try {
+    //   const authToken = cookies.get("authToken");
+    //   const res = await axios.put("auth/verify", {
+    //     token: authToken,
+    //     otp: otp,
+    //   });
 
-      if (res.data && res?.data?.success === true) {
-        cookies.set('token', res?.data.token, { path: '/', maxAge: 1296000 });
-        navigate('/', { replace: true });
-      }
-    } catch (error) {
-      if (error) {
-        console.log(error);
-        return;
-      }
+    //   if (res.data && res?.data?.success === true) {
+    //     cookies.set("token", res?.data.token, { path: "/", maxAge: 1296000 });
+    //     navigate("/", { replace: true });
+    //   }
+    // } catch (error) {
+    //   if (error) {
+    //     console.log(error);
+    //     return;
+    //   }
+    // }
+  };
+  useEffect(() => {
+    console.log(otp);
+  }, [otp]);
+
+  const enter = (e, index) => {
+    e.select();
+    if (isNaN(e.value)) return false;
+    setOtp([...otp.map((d, id) => (id === index ? e.value : d))]);
+    if (e.nextSibling) {
+      e.nextSibling.focus();
     }
   };
   return (
@@ -137,31 +177,30 @@ export default function Otp() {
         <Logo to="/">
           <img src="../images/Logo.png" alt="" />
         </Logo>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <div>
           <div>
             <CgProfile />
             <h2>{email}</h2>
           </div>
-          <label htmlFor="otp">OTP</label>
-          <input
-            type="number"
-            id="otp"
-            {...register("otp", {
-              required: "OTP is required",
-              minLength: {
-                value: 4,
-                message: "Otp has only 4 characters",
-              },
-              maxLength: {
-                value: 4,
-                message: "Otp has only 4 characters",
-              },
-            })}
-          />
-          <span>{errors.otp && errors.otp.message}</span>
-
-          <button type="submit">Next</button>
-        </Form>
+          <Form onSubmit={onSubmit}>
+            <label htmlFor="otp">OTP</label>
+            <Input>
+              {otp.map((d, i) => {
+                return (
+                  <input
+                    key={i}
+                    value={d}
+                    onChange={(e) => enter(e.target, i)}
+                    type="number"
+                    maxLength="1"
+                    onFocus={(e) => e.target.select()}
+                  />
+                );
+              })}
+            </Input>
+            <button type="submit">Next</button>
+          </Form>
+        </div>
       </Wrapper>
     </Container>
   );
