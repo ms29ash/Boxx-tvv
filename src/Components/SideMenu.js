@@ -1,6 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Cookies from 'universal-cookie';
+import { useSelector, useDispatch } from 'react-redux';
+import { setOpen } from '../features/menu/menuSlice';
+import { removeUser } from '../features/user/userSlice'
+
+
+//Icons
 import {
   AiOutlineHome,
   AiOutlineClockCircle,
@@ -10,12 +17,11 @@ import {
 } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
 import { BiHelpCircle, BiLogIn } from "react-icons/bi";
-import { useSelector, useDispatch } from 'react-redux';
-import { setOpen } from '../features/menu/menuSlice';
 import { MdOutlineMovie } from "react-icons/md";
 import { RiMovieLine } from "react-icons/ri";
 import { FaSignOutAlt } from "react-icons/fa";
 import { MdOutlineAnimation } from "react-icons/md";
+
 
 const Container = styled.div`
   width: 30vw;
@@ -102,6 +108,35 @@ const Opt = styled(Link)`
     }
   }
 `;
+const SignOut = styled.div`
+display: flex;
+  color: white;
+  text-decoration: none;
+  margin: 0.25rem;
+  cursor: pointer;
+  align-items: center;
+  padding: 0.5rem;
+  font-weight:bold;
+  border-radius: 30px;
+  color: ${(p) => p.selected === true && p.theme.color.main};
+  p{
+    font-size:1rem;
+  }
+  &:hover {
+   
+    background-color: ${(p) => p.theme.color.main};
+    color:${(p) => p.selected === true && '#fff'};
+  }
+  @media screen and (min-width: 500px) and (max-width: 1024px) {
+    flex-direction: column;
+    margin: 0.15rem;
+    padding: 0.15rem;
+    font-weight: bold;
+    p {
+      font-size: 0.75rem;
+    }
+  }
+`
 const Icon = styled.div`
   padding-right: 1rem;
   padding-left: 0.5rem;
@@ -115,11 +150,19 @@ function SideMenu() {
   const user = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const cookies = new Cookies();
 
   const closeMenu = () => {
     dispatch(setOpen());
   }
 
+  const handleSignOut = () => {
+    cookies.remove('token');
+    dispatch(removeUser());
+    navigate('signin')
+
+  }
 
   return (
     <Container isOpen={isOpen}>
@@ -201,12 +244,12 @@ function SideMenu() {
               </Opt>
             </Group>
           </Options>{
-            user ? (<Opt to="/">
+            user ? (<SignOut onClick={handleSignOut} >
               <Icon>
                 <FaSignOutAlt />{" "}
               </Icon>
               <p>Sign Out</p>
-            </Opt>) :
+            </SignOut>) :
               (<Opt to="/signin">
                 <Icon>
                   <BiLogIn />{" "}
