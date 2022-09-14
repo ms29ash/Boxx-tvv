@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
 import axios from "../axios";
@@ -140,6 +140,21 @@ const Desc = styled.p`
   }
 `;
 
+const Load = keyframes` 
+  0%{background-position:9% 0%}
+  50%{background-position:92% 100%}
+  100%{background-position:9% 0%}
+  `;
+const Loading = styled.div`
+  background: linear-gradient(60deg, #303030 30%, #000 75%);
+  background-size: 400% 400%;
+  height: auto;
+  aspect-ratio: 16 / 8;
+  width: 100%;
+
+  animation: ${Load} 30s ease infinite;
+`;
+
 function Detail() {
   const { pathname } = useLocation();
   const path = pathname.split("/");
@@ -174,7 +189,7 @@ function Detail() {
   return (
     <>
       <Container>
-        {isSuccess && (
+        {isSuccess ? (
           <Wrapper>
             <img src={data?.data[0]?.poster} alt="" />
             <Details>
@@ -217,6 +232,8 @@ function Detail() {
               </Group>
             </Details>
           </Wrapper>
+        ) : (
+          <Loading></Loading>
         )}
       </Container>
       <ImageSlider title={path[1]} />
