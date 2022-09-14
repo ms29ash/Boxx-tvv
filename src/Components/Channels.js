@@ -6,13 +6,7 @@ import Heading from "./Heading";
 const Container = styled.div`
   width: 100%;
   margin: 2rem 0 5rem;
-  height: 30vh;
-  @media screen and (max-width: 1200px) and (min-width: 720px) {
-    height: 15vh;
-  }
-  @media screen and (max-width: 720px) and (min-width: 0) {
-    height: 10vh;
-  }
+
   @media screen and (max-width: 500px) and (min-width: 0) {
     
     margin: 1.25rem 0 3rem;
@@ -20,20 +14,18 @@ const Container = styled.div`
 `;
 
 const ChannelContainer = styled.div`
-width: 95%;
-height:100%;
+  width: 95%;
   margin: 0 auto;
   `;
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
   align-items: center;
+  flex-wrap: wrap;
   div {
     background: #151515;
-    height: 100%;
-    width: 20%;
-    margin: 0.5rem;
+    width: 18%;
+    aspect-ratio: 1/1;
     display: grid;
     place-items: center;
     border-radius: 10px;
@@ -43,15 +35,14 @@ const Wrapper = styled.div`
       rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
       rgba(0, 0, 0, 0.22) 0px 10px 10px;
-     
       transition-property: all;
       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       transition-duration: 250ms;
-    @media screen and (max-width: 1200px) and (min-width: 0) {
-      margin: 0.25rem;
-    }
+      margin:0.60%;
+  
     @media screen and (max-width: 768px) and (min-width: 0){
-      border-radius: 5px;
+      width:31%;
+      margin:2% 0.50%;
 
     }
     &:hover {
@@ -60,7 +51,6 @@ const Wrapper = styled.div`
     }
     img {
       width: 50%;
-      /* height:50%; */
     }
   }
 `;

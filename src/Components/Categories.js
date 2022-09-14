@@ -11,43 +11,29 @@ const Container = styled.div`
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
+  flex-wrap:wrap;
 `;
 
 const Wrap = styled(Link)`
-  width: 19.5%;
+  width: 18%;
   margin: 0.5%;
   display: grid;
   place-items: center;
   border-radius: 10px;
-  aspect-ratio: 4/4;
+  aspect-ratio: 1/1;
   border: 2px solid #180f11;
   overflow: hidden;
-
   transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
   position: relative;
   cursor: pointer;
   text-decoration:none;
   color:#fff;
   background: hsla(339, 100%, 55%, 1);
- 
-  
-  ${(p) => p.no === 2 && ` background:background: `}
-  ${(p) =>
-    p.no === 3 &&
-    ` background:
-    `}
-  ${(p) =>
-    p.no === 4 &&
-    `   background: ;
-    `}
-  ${(p) =>
-    p.no === 5 &&
-    ` background: ;
-    `}
+  @media screen and (max-width: 768px) and (min-width: 0){
+      width:31%;
+      margin:2% 0.50%;
 
-     
-
-
+    }
   &:hover {
     border: 2px solid ${(p) => p.theme.color.main};
    
