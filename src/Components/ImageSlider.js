@@ -8,6 +8,7 @@ import axios from "../axios";
 import Card from "./Card";
 import LeftArrow, { RightArrow } from "./Arrows";
 import Heading from "./Heading";
+import LoadingAnimation from "./LoadAnimation";
 
 
 const Container = styled.div`
@@ -82,6 +83,15 @@ const Wrap = styled.div`
   }
 `;
 
+const LoadAnimation = styled(LoadingAnimation)`
+width: 96%;
+border-radius: 8px;
+    margin: 0px auto;
+    aspect-ratio: 6/ 8;
+    box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
+      rgb(0 0 0 / 73%) 0px 16px 10px -10px;
+`
+
 function ImageSlider({ title }) {
   let settings = {
     infinite: false,
@@ -111,7 +121,7 @@ function ImageSlider({ title }) {
     return axios.get(path);
   };
 
-  const { data, isSuccess } = useQuery([`${title}`], () =>
+  const { data, isSuccess, isLoading } = useQuery([`${title}`], () =>
     fetchData(`/${title}`)
   );
 
@@ -125,6 +135,14 @@ function ImageSlider({ title }) {
               <Card title={title} item={item} />
             </Wrap>
           ))}
+        {
+          isLoading && Array(10).fill('').map((p, i) =>
+            <Wrap key={i}>
+
+              <LoadAnimation />
+            </Wrap>
+          )
+        }
       </Carousel>
     </Container>
   );

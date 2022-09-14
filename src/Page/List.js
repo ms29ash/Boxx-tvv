@@ -5,6 +5,7 @@ import Intro from "../Components/Intro";
 import { useLocation } from "react-router-dom";
 import axios from "../axios";
 import { useQuery } from "@tanstack/react-query";
+import LoadingAnimation from "../Components/LoadAnimation";
 
 const Page = styled.div``;
 const Container = styled.div`
@@ -53,6 +54,15 @@ const Box = styled.div`
   }
 `;
 
+const LoadAnimation = styled(LoadingAnimation)`
+width: 96%;
+border-radius: 8px;
+    margin: 0px auto;
+    aspect-ratio: 6/ 8;
+    box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
+      rgb(0 0 0 / 73%) 0px 16px 10px -10px;
+`
+
 function List() {
   const { pathname } = useLocation();
   const title = pathname.replace("/", "");
@@ -60,7 +70,7 @@ function List() {
     return axios.get(path);
   };
 
-  const { data, isSuccess } = useQuery([`${title}`], () => fetchData(pathname));
+  const { data, isSuccess, isLoading } = useQuery([`${title}`], () => fetchData(pathname));
   return (
     <Page>
       <Intro type={title} />
@@ -75,6 +85,14 @@ function List() {
                 </Box>
               );
             })}
+          {
+            isLoading && Array(10).fill('').map((p, i) =>
+              <Box key={i}>
+
+                <LoadAnimation />
+              </Box>
+            )
+          }
         </Wrapper>
       </Container>
     </Page>

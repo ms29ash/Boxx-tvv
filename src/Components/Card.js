@@ -4,11 +4,12 @@ import styled from "styled-components";
 import { AiOutlinePlusCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { addToWatchlist, removefromWatchlist } from '../features/watchlist/watchlistSlice'
 import { useDispatch, useSelector } from 'react-redux';
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import LoadingAnimation from './LoadAnimation'
 
 
 
-
-const Img = styled.img`
+const Img = styled(LazyLoadImage)`
     width: 96%;
     object-fit: cover;
     border-radius: 8px;
@@ -58,6 +59,15 @@ const Details = styled.div`
   }
 `;
 
+const LoadAnimation = styled(LoadingAnimation)`
+ width: 96%;
+    border-radius: 8px;
+    margin: 0px auto;
+    aspect-ratio: 6/ 8;
+    box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
+      rgb(0 0 0 / 73%) 0px 16px 10px -10px;
+`
+
 
 function Card({ item, title }) {
   const findWatchlist = useSelector((state) => state.watchlist.watchlist);
@@ -88,6 +98,10 @@ function Card({ item, title }) {
       <Img
         src={item?.thumbnail}
         alt=""
+        width="100%"
+        effect="blur"
+        threshold={500}
+        placeholder={<LoadAnimation />}
         onClick={() => {
           navigate(`/${title}/${item._id}`);
         }}
