@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import Card from "../Components/Card";
-import Intro from "../Components/Intro";
+import Card from "./Card";
+import Intro from "./Intro";
 import { useLocation } from "react-router-dom";
 import axios from "../axios";
 import { useQuery } from "@tanstack/react-query";
-import LoadingAnimation from "../Components/LoadAnimation";
+import LoadingAnimation from "./LoadAnimation";
 
 const Page = styled.div``;
 const Container = styled.div`
@@ -63,7 +63,7 @@ border-radius: 8px;
       rgb(0 0 0 / 73%) 0px 16px 10px -10px;
 `
 
-function List() {
+function Grid() {
   const { pathname } = useLocation();
   const title = pathname.replace("/", "");
   const fetchData = async (path) => {
@@ -99,4 +99,4 @@ function List() {
   );
 }
 
-export default List;
+export default Grid;

@@ -2,7 +2,7 @@ import "./App.css";
 import React from 'react'
 import { Routes, Route } from "react-router-dom";
 import Home from "./Page/Home";
-import List from "./Page/List";
+import Grid from "./Components/Grid";
 import Page from "./Components/Page";
 import Detail from "./Page/Detail";
 import Channel from "./Page/Channel";
@@ -28,17 +28,17 @@ function App() {
         <Route path="/" element={<Page />}>
           <Route index element={<Home />} />
           <Route path="movies" >
-            <Route index element={<List />} />
+            <Route index element={<Grid />} />
             <Route path=":id" element={<Detail />} />
 
           </Route>
           <Route path="shows" >
-            <Route index element={<List />} />
+            <Route index element={<Grid />} />
             <Route path=":id" element={<Detail />} />
 
           </Route>
           <Route path="anime" >
-            <Route index element={<List />} />
+            <Route index element={<Grid />} />
             <Route path=":id" element={<Detail />} />
 
           </Route>
