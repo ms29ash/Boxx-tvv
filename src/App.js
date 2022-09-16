@@ -14,6 +14,8 @@ import Otp from "./Page/Otp";
 import NotFound from './Page/NotFound'
 import Auth from "./Components/Auth";
 import ScrollToTop from "./Components/ScrollToTop";
+import Watchlist from "./Page/Watchlist";
+import Favourite from "./Page/Favourite";
 
 
 function App() {
@@ -55,6 +57,8 @@ function App() {
             <Route path="crime" element={<Categories />} />
           </Route>
           <Route path="details" element={<Detail />} />
+          <Route path="watchlist" element={<Watchlist />} />
+          <Route path="favourite" element={<Favourite />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

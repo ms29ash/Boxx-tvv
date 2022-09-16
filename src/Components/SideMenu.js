@@ -215,11 +215,11 @@ function SideMenu() {
                 </Icon>
                 <p>Favourite</p>
               </Opt>
-              <Opt to="/bookmarks" onClick={closeMenu} selected={pathname === '/bookmarks'}>
+              <Opt to="/watchlist" onClick={closeMenu} selected={pathname === '/watchlist'}>
                 <Icon>
                   <BsBookmark />{" "}
                 </Icon>
-                <p>Bookmarks</p>
+                <p>Watchlist</p>
               </Opt>
               <Opt to="/downloads" onClick={closeMenu} selected={pathname === '/downloads'}>
                 <Icon>
