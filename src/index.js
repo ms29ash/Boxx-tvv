@@ -15,6 +15,7 @@ const theme = {
     main: "#f20544",
     mainDark: "#c00436",
     background: "#180f11",
+    gray: "#151515"
   },
 };
 
