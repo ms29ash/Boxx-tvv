@@ -28,6 +28,7 @@ const Container = styled.div`
 `;
 const NavLinks = styled.div`
   display: flex;
+  align-items:center;
 `;
 
 const User = styled.div`
@@ -74,15 +75,15 @@ const Menu = styled.div`
 `;
 const Logo = styled(Link)`
   img {
-    width: 150px;
+    width: 8rem;
     @media screen and (min-width: 0px) and (max-width: 500px) {
-      width: 100px;
+      width:6rem;
     }
   }
 `;
 
 const Input = styled.div`
-  font-size: 2rem;
+  font-size: 1.5rem;
   flex: 1;
   font-weight: bold;
   cursor: pointer;
@@ -108,8 +109,8 @@ const Input = styled.div`
 const Profile = styled.div`
   img {
     margin: 0 1rem;
-    height: 3rem;
-    width: 3rem;
+    height: 2rem;
+    width: 2rem;
     border-radius: 5000px;
     object-fit: cover;
   }
@@ -128,6 +129,7 @@ function Header() {
         <NavLinks>
           <Menu>
             <Hamburger
+              size={25}
               toggled={isOpen}
               onToggle={() => {
                 dispatch(setOpen());
@@ -160,7 +162,7 @@ function Header() {
 
             <Profile>
               <img
-                src="https://secure.gravatar.com/avatar/8bb211a1d66efabb5fe4b267f7f6fcd8/?s=48&d=https://images.binaryfortress.com/General/UnknownUser1024.png"
+                src="/images/profile.jpg"
                 alt=""
               />
             </Profile>
