@@ -12,7 +12,7 @@ export default function ScrollToTop() {
 
                 scroll.scrollTo({
                     top: 0,
-                    behavior: "smooth"
+                    behavior: "auto"
                 });
             };
         }
