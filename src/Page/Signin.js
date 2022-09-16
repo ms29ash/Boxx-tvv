@@ -35,14 +35,14 @@ const Logo = styled(Link)`
   }
 `;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+`;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 95vh;
-
+  width: 90vw;
   background-color: rgba(89, 89, 89, 0.8);
-  padding: 2rem;
+  padding:1rem 3vw;
   max-width: 370px;
   margin-bottom: 30%;
   h2 {
@@ -51,10 +51,10 @@ const Form = styled.form`
     text-align: center;
   }
   input {
-    width: 95%;
+    width: 90%;
     font-size: 1rem;
     padding: 0.75rem 2.5%;
-    margin: 0.25rem 0;
+    margin: 0.25rem auto;
     border: none;
     outline: none;
     font-size: 1rem;
@@ -76,7 +76,7 @@ const Form = styled.form`
     }
   }
   label {
-    margin: 0.15rem 0;
+    margin: 0.15rem 2.5%;
   }
   small {
     margin: 0.5rem 0 0;

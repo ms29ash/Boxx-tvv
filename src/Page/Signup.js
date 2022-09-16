@@ -40,16 +40,19 @@ const Wrapper = styled.div`
   flex-direction: column;
   h1 {
     margin-bottom: 1rem;
-    width: 100%;
+    width: 90%;
     text-align: center;
     font-size: 2.5rem;
+    @media screen and (min-width: 0px) and (max-width:768px){
+      font-size: 1.75rem;
+    }
   }
 `;
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 95vh;
-  padding: 2rem;
+  width: 90vw;
+  padding: 2rem 3vw;
   max-width: 370px;
   margin-bottom: 30%;
 
