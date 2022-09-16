@@ -5,7 +5,7 @@ import { MdOutlineSort, MdDeleteOutline } from "react-icons/md";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { removefromWatchlist } from "../features/watchlist/watchlistSlice";
 import { addToFavorite } from "../features/watchlist/favouriteSlice";
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Container = styled.div`
   width: 100%;
@@ -108,6 +108,7 @@ function List({ data }) {
   const { pathname } = useLocation();
   const title = pathname.replace("/", "");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const removeWatchlist = (index) => {
     dispatch(removefromWatchlist(index));
@@ -127,9 +128,9 @@ function List({ data }) {
         {data.length === 0 ? (
           <NoItem>Nothing to watch</NoItem>
         ) : (
-          data.map((item, index) => {
+          data.map(({ item, title }, index) => {
             return (
-              <Wrap key={item._id}  >
+              <Wrap key={item._id} onClick={() => navigate(`/${title}/${item._id}`)} >
                 <div>
                   <img src={item.thumbnail} alt="" />
                   <Details>

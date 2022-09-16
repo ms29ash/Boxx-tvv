@@ -16,6 +16,8 @@ import {
 } from "../features/watchlist/watchlistSlice";
 import ImageSlider from "../Components/ImageSlider";
 import LoadingAnimation from '../Components/LoadAnimation'
+import getIndexOf from '../Functions/GetIndex'
+
 
 const Container = styled.div`
   width: 100%;
@@ -155,10 +157,7 @@ function Detail() {
 
   const [index, setIndex] = useState(-1);
   useEffect(() => {
-    const getIndexOf = (list, id) => {
-      const ids = list.map((listItem) => listItem._id);
-      return ids.indexOf(id);
-    };
+
     const i = getIndexOf(findWatchlist, data?.data[0]?._id);
     setIndex(i);
   }, [data, findWatchlist]);
@@ -184,7 +183,7 @@ function Detail() {
                   {index < 0 ? (
                     <WatchListBtn
                       onClick={() => {
-                        addtoWatchList(data?.data[0]);
+                        addtoWatchList({ item: data?.data[0], title: path[1] });
                       }}>
                       <AiOutlinePlusCircle /> Add to Watchlist
                     </WatchListBtn>

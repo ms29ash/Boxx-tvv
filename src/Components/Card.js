@@ -6,6 +6,7 @@ import { addToWatchlist, removefromWatchlist } from '../features/watchlist/watch
 import { useDispatch, useSelector } from 'react-redux';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import LoadingAnimation from './LoadAnimation'
+import getIndexOf from '../Functions/GetIndex'
 
 
 
@@ -79,10 +80,6 @@ function Card({ item, title }) {
 
 
   useEffect(() => {
-    const getIndexOf = (list, id) => {
-      const ids = list.map(listItem => listItem._id);
-      return ids.indexOf(id);
-    }
     const i = getIndexOf(findWatchlist, item._id);
     setIndex(i)
   }, [findWatchlist, item._id])
@@ -113,7 +110,7 @@ function Card({ item, title }) {
           {item?.time && <p>{item?.time} </p>}
           <p>{item?.category}</p>
 
-          {(index < 0) ? (<button onClick={() => { addtoWatchList(item) }}>
+          {(index < 0) ? (<button onClick={() => { addtoWatchList({ item, title }) }}>
             <AiOutlinePlusCircle />
             Add to Watchlist
           </button>) : (<button onClick={() => { removeFromWatchList(index) }}>
