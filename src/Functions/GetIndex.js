@@ -1,5 +1,5 @@
 const getIndexOf = (list, id) => {
-  const ids = list.map(listItem => listItem._id);
+  const ids = list.map(listItem => listItem?.item._id);
   return ids.indexOf(id);
 }
 
