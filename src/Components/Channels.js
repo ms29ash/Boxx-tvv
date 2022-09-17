@@ -5,7 +5,7 @@ import Heading from "./Heading";
 
 const Container = styled.div`
   width: 100%;
-  margin: 2rem 0 5rem;
+  margin: 2rem 0 1.5rem;
 
   @media screen and (max-width: 500px) and (min-width: 0) {
     
