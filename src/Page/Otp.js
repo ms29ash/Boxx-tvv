@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
@@ -128,40 +128,32 @@ const Input = styled.div`
 `;
 
 export default function Otp() {
+  const btnRef = useRef();
   const navigate = useNavigate();
   const cookies = new Cookies();
   const [otp, setOtp] = useState(new Array(4).fill(""));
   const email = sessionStorage.getItem("email");
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const Otp = otp.join("");
-    console.log(Otp);
-    // try {
-    //   const authToken = cookies.get("authToken");
-    //   const res = await axios.put("auth/verify", {
-    //     token: authToken,
-    //     otp: otp,
-    //   });
+    try {
+      const authToken = cookies.get("authToken");
+      const res = await axios.put("auth/verify", {
+        token: authToken,
+        otp: Otp,
+      });
 
-    //   if (res.data && res?.data?.success === true) {
-    //     cookies.set("token", res?.data.token, { path: "/", maxAge: 1296000 });
-    //     navigate("/", { replace: true });
-    //   }
-    // } catch (error) {
-    //   if (error) {
-    //     console.log(error);
-    //     return;
-    //   }
-    // }
+      if (res.data && res?.data?.success === true) {
+        cookies.set("token", res?.data.token, { path: "/", maxAge: 1296000 });
+        navigate("/", { replace: true });
+      }
+    } catch (error) {
+      if (error) {
+        return;
+      }
+    }
   };
-  useEffect(() => {
-    console.log(otp);
-  }, [otp]);
 
   const enter = (e, index) => {
     e.select();
@@ -169,6 +161,9 @@ export default function Otp() {
     setOtp([...otp.map((d, id) => (id === index ? e.value : d))]);
     if (e.nextSibling) {
       e.nextSibling.focus();
+    }
+    else {
+      btnRef.current.focus()
     }
   };
   return (
@@ -193,12 +188,14 @@ export default function Otp() {
                     onChange={(e) => enter(e.target, i)}
                     type="number"
                     maxLength="1"
+                    required={true}
+                    max={9}
                     onFocus={(e) => e.target.select()}
                   />
                 );
               })}
             </Input>
-            <button type="submit">Next</button>
+            <button ref={btnRef} type="submit">Next</button>
           </Form>
         </div>
       </Wrapper>
