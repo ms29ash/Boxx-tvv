@@ -1,19 +1,19 @@
 {
   "short_name": "Boxx",
-  "name": "Boxx",
+  "name": "Watch Movies , Shows and Anime from all OTT platforms",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "Logo64.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "Logo192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "Logo512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
