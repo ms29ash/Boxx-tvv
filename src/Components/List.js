@@ -38,16 +38,30 @@ const Wrapper = styled.div`
 
 const Wrap = styled.div`
   cursor: pointer;
+  height: 150px;
+  position: relative;
   &:hover {
     background: rgba(242, 5, 68, 0.84);
   }
-  & > div {
+  
+
+  hr {
+    background: #7b7b7b;
+    margin: 0.25rem 0;
+    height: 1px;
+    border: none;
+  }
+`;
+const Main = styled.div`
     display: flex;
     align-items: center;
     height: 150px;
     border-radius: 2px;
-
-    position: relative;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
 
     @media screen and (max-width: 768px) and (min-width: 0) {
       height: 100px;
@@ -58,15 +72,7 @@ const Wrap = styled.div`
       aspect-ratio: 6/ 8;
       object-fit: cover;
     }
-  }
-
-  hr {
-    background: #7b7b7b;
-    margin: 0.25rem 0;
-    height: 1px;
-    border: none;
-  }
-`;
+`
 
 const Details = styled.div`
   flex: 1;
@@ -130,23 +136,24 @@ function List({ data }) {
         ) : (
           data.map(({ item, title }, index) => {
             return (
-              <Wrap key={item._id} onClick={() => navigate(`/${title}/${item._id}`)} >
-                <div>
+              <Wrap key={item._id}  >
+                <Main onClick={() => navigate(`/${title}/${item._id}`)} >
                   <img src={item.thumbnail} alt="" />
                   <Details>
                     <h3>{item.name}</h3>
                     <h5>{item.category}</h5>
                   </Details>
-                  <Buttons>
-                    <button>
-                      <MdDeleteOutline onClick={() => removeWatchlist(index)} />
-                    </button>
-                    {/* <AiFillHeart/> */}
-                    <button>
-                      <AiOutlineHeart onClick={() => addFavourite(item)} />
-                    </button>
-                  </Buttons>
-                </div>
+
+                </Main>
+                <Buttons>
+                  <button>
+                    <MdDeleteOutline onClick={() => removeWatchlist(index)} />
+                  </button>
+                  {/* <AiFillHeart/> */}
+                  <button>
+                    <AiOutlineHeart onClick={() => addFavourite(item)} />
+                  </button>
+                </Buttons>
                 <hr />
               </Wrap>
             );
