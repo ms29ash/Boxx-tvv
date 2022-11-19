@@ -2,11 +2,11 @@ import React from 'react'
 import List from '../Components/List'
 import { useSelector } from 'react-redux'
 
-function Favourite() {
-    const data = useSelector(state => state.favourite.favourite)
+function Favorites() {
+    const data = useSelector(state => state.list.favorites)
     return (
         <List data={data} />
     )
 }
 
-export default Favourite
+export default Favorites

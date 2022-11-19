@@ -1,11 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { MdOutlineSort, MdDeleteOutline } from "react-icons/md";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { removefromWatchlist } from "../features/watchlist/watchlistSlice";
-import { addToFavorite } from "../features/watchlist/favouriteSlice";
+import { MdOutlineSort } from "react-icons/md";
 import { useLocation, useNavigate } from 'react-router-dom'
+import ListElement from "./ListElement";
 
 const Container = styled.div`
   width: 100%;
@@ -36,74 +33,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Wrap = styled.div`
-  cursor: pointer;
-  height: 150px;
-  position: relative;
-  &:hover {
-    background: rgba(242, 5, 68, 0.84);
-  }
-  
 
-  hr {
-    background: #7b7b7b;
-    margin: 0.25rem 0;
-    height: 1px;
-    border: none;
-  }
-`;
-const Main = styled.div`
-    display: flex;
-    align-items: center;
-    height: 150px;
-    border-radius: 2px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-
-    @media screen and (max-width: 768px) and (min-width: 0) {
-      height: 100px;
-    }
-    img {
-      height: 90%;
-      margin: 0 1rem;
-      aspect-ratio: 6/ 8;
-      object-fit: cover;
-    }
-`
-
-const Details = styled.div`
-  flex: 1;
-`;
-const Buttons = styled.div`
-  display: flex;
-  position: absolute;
-  right: 5%;
-  top: 5%;
-  @media screen and (max-width: 768px) and (min-width: 0) {
-    top: 0%;
-    right: 0;
-  }
-  button {
-    aspect-ratio: 1/1;
-    border-radius: 50px;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.31);
-      cursor: pointer;
-    }
-  }
-  svg {
-    font-size: 1.5rem;
-    margin: 0 0.5rem;
-    @media screen and (min-width: 0px) and (max-width: 768px) {
-      margin: 0 0.25rem;
-      font-size: 0.75rem;
-    }
-  }
-`;
 
 const NoItem = styled.div`
   min-height: 50vh;
@@ -113,16 +43,8 @@ const NoItem = styled.div`
 function List({ data }) {
   const { pathname } = useLocation();
   const title = pathname.replace("/", "");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const removeWatchlist = (index) => {
-    dispatch(removefromWatchlist(index));
-  };
 
-  const addFavourite = (payload) => {
-    dispatch(addToFavorite(payload));
-  };
   return (
     <Container>
       <Wrapper>
@@ -131,31 +53,13 @@ function List({ data }) {
           <MdOutlineSort />
           <h3>Sort</h3>
         </button>
-        {data.length === 0 ? (
+        {data?.length === 0 | data === undefined | data === null ? (
           <NoItem>Nothing to watch</NoItem>
         ) : (
-          data.map(({ item, title }, index) => {
+          data?.map((item, index) => {
             return (
-              <Wrap key={item._id}  >
-                <Main onClick={() => navigate(`/${title}/${item._id}`)} >
-                  <img src={item.thumbnail} alt="" />
-                  <Details>
-                    <h3>{item.name}</h3>
-                    <h5>{item.category}</h5>
-                  </Details>
+              <ListElement key={item._id} index={index} id={item.id} type={item.type} />
 
-                </Main>
-                <Buttons>
-                  <button>
-                    <MdDeleteOutline onClick={() => removeWatchlist(index)} />
-                  </button>
-                  {/* <AiFillHeart/> */}
-                  <button>
-                    <AiOutlineHeart onClick={() => addFavourite(item)} />
-                  </button>
-                </Buttons>
-                <hr />
-              </Wrap>
             );
           })
         )}

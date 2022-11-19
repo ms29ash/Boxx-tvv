@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux'
 
 
 
-function Watchlist() {
+function Watchlater() {
 
-    const data = useSelector((state) => state.watchlist.watchlist);
+    const data = useSelector((state) => state.list?.watchLater);
     return (
         <div>
             <List data={data} />
@@ -15,4 +15,4 @@ function Watchlist() {
     )
 }
 
-export default Watchlist
+export default Watchlater

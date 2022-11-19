@@ -11,9 +11,9 @@ import {
 } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addToWatchlist,
-  removefromWatchlist,
-} from "../features/watchlist/watchlistSlice";
+  removeFromListWatch,
+  addToListWatch,
+} from "../features/list/listSlice";
 import ImageSlider from "../Components/ImageSlider";
 import LoadingAnimation from '../Components/LoadAnimation'
 import getIndexOf from '../Functions/GetIndex'
@@ -47,7 +47,7 @@ const Details = styled.div`
   background: rgb(0, 0, 0);
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.95) 0%,
     rgba(0, 0, 0, 0.87) 18%,
     rgba(0, 0, 0, 0.74) 46%,
     rgba(0, 0, 0, 0) 66%
@@ -144,8 +144,11 @@ const Desc = styled.p`
 `;
 
 function Detail() {
+  //Pathname
   const { pathname } = useLocation();
   const path = pathname.split("/");
+
+  //Fetch data
   const fetchData = async (path) => {
     return axios.get(path);
   };
@@ -153,22 +156,26 @@ function Detail() {
     fetchData(pathname)
   );
 
-  const findWatchlist = useSelector((state) => state.watchlist.watchlist);
-
+  //Find index in watchlater
+  const findWatchlater = useSelector((state) => state.list?.watchLater);
   const [index, setIndex] = useState(-1);
   useEffect(() => {
 
-    const i = getIndexOf(findWatchlist, data?.data[0]?._id);
+    const i = getIndexOf(findWatchlater, data?.data[0]?._id);
     setIndex(i);
-  }, [data, findWatchlist]);
+  }, [data, findWatchlater]);
+
+
 
   const dispatch = useDispatch();
-
-  const addtoWatchList = (item) => {
-    dispatch(addToWatchlist(item));
+  //Add to watchlater
+  const addtoWatchLater = (item) => {
+    dispatch(addToListWatch({ type: path[1], id: data?.data[0]?._id }));
   };
-  const removeFromWatchList = (id) => {
-    dispatch(removefromWatchlist(id));
+
+  //Remove from watch later
+  const removeFromWatchLater = () => {
+    dispatch(removeFromListWatch(index));
   };
 
   return (
@@ -183,14 +190,14 @@ function Detail() {
                   {index < 0 ? (
                     <WatchListBtn
                       onClick={() => {
-                        addtoWatchList({ item: data?.data[0], title: path[1] });
+                        addtoWatchLater({ item: data?.data[0], title: path[1] });
                       }}>
                       <AiOutlinePlusCircle /> Add to Watchlist
                     </WatchListBtn>
                   ) : (
                     <WatchListBtn
                       onClick={() => {
-                        removeFromWatchList(index);
+                        removeFromWatchLater(index);
                       }}>
                       <AiOutlineCheckCircle /> Added to Watchlist
                     </WatchListBtn>

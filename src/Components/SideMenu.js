@@ -41,7 +41,7 @@ const Container = styled.div`
     transform-origin: left center;
     transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
     transform: ${(p) =>
-      p.isOpen === true ? "translateX(0%)" : "translateX(-100%)"};
+    p.isOpen === true ? "translateX(0%)" : "translateX(-100%)"};
   }
 `;
 const Sidebar = styled.div`
@@ -238,22 +238,22 @@ function SideMenu() {
                 <p>Recent</p>
               </Opt>
               <Opt
-                to="/favourite"
+                to="/favorites"
                 onClick={closeMenu}
-                selected={pathname === "/favourite"}>
+                selected={pathname === "/favorites"}>
                 <Icon>
                   <AiOutlineHeart />{" "}
                 </Icon>
-                <p>Favourite</p>
+                <p>Favorites</p>
               </Opt>
               <Opt
-                to="/watchlist"
+                to="/watchlater"
                 onClick={closeMenu}
-                selected={pathname === "/watchlist"}>
+                selected={pathname === "/watchlater"}>
                 <Icon>
                   <BsBookmark />{" "}
                 </Icon>
-                <p>Watchlist</p>
+                <p>Watchlater</p>
               </Opt>
               <Opt
                 to="/downloads"

@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AiOutlinePlusCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import {
-  addToWatchlist,
-  removefromWatchlist,
-} from "../features/watchlist/watchlistSlice";
+  removeFromListWatch,
+  addToListWatch
+} from "../features/list/listSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import LoadingAnimation from "./LoadAnimation";
@@ -69,23 +69,28 @@ const LoadAnimation = styled(LoadingAnimation)`
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
 `;
 
-function Card({ item, title }) {
-  const findWatchlist = useSelector((state) => state.watchlist.watchlist);
-
-  const [index, setIndex] = useState(-1);
+function Card({ item, title, id }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const i = getIndexOf(findWatchlist, item._id);
-    setIndex(i);
-  }, [findWatchlist, item._id]);
+  //watchlater list
+  const findWatchLater = useSelector((state) => state.list.watchLater);
+  //index in watchlater list
+  const [index, setIndex] = useState(-1);
 
-  const addtoWatchList = (item) => {
-    dispatch(addToWatchlist(item));
+  //finding index in watchlater list
+  useEffect(() => {
+    const i = getIndexOf(findWatchLater, item._id);
+    setIndex(i);
+  }, [findWatchLater, item._id]);
+
+  //Add to watchlater
+  const addToWatchLaterHandler = () => {
+    dispatch(addToListWatch({ type: title, id: item._id }));
   };
-  const removeFromWatchList = (id) => {
-    dispatch(removefromWatchlist(id));
+  //Remove from watchlater
+  const removeFromWatchLater = (index) => {
+    dispatch(removeFromListWatch(index));
   };
   return (
     <>
@@ -110,7 +115,7 @@ function Card({ item, title }) {
           {index < 0 ? (
             <button
               onClick={() => {
-                addtoWatchList({ item, title });
+                addToWatchLaterHandler();
               }}>
               <AiOutlinePlusCircle />
               Add to Watchlist
@@ -118,7 +123,7 @@ function Card({ item, title }) {
           ) : (
             <button
               onClick={() => {
-                removeFromWatchList(index);
+                removeFromWatchLater(index);
               }}>
               <AiOutlineCheckCircle />
               Added to Watchlist

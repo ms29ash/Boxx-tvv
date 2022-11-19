@@ -81,7 +81,7 @@ function Grid() {
             data?.data.map((item) => {
               return (
                 <Box key={item._id}>
-                  <Card title={title} item={item} />
+                  <Card title={title} id={item._id} item={item} />
                 </Box>
               );
             })}
