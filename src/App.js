@@ -30,13 +30,13 @@ function App() {
       <ScrollToTop />
       <GetUser />
       <Routes>
-        <Route path="*" element={<NotFound />} />
 
-        {
-          signedIn === false ?
+        {signedIn === null ?
+          <Route path="*" element={<Loading />} />
+          : signedIn === false ?
 
             (<>
-              <Route path="/" element={<Loading />} />
+              {/* <Route path="*" element={<NotFound />} /> */}
               <Route path="signin" element={<Auth />} >
                 <Route index element={<Signin />} />
               </Route>
@@ -47,39 +47,41 @@ function App() {
               </Route></>)
 
             :
-            (<><Route path="/" element={<Page />}>
-              <Route index element={<Home />} />
-              <Route path="movies" >
-                <Route index element={<Grid />} />
-                <Route path=":id" element={<Detail />} />
+            (<>
+              <Route path="*" element={<NotFound />} />
+              <Route path="/" element={<Page />}>
+                <Route index element={<Home />} />
+                <Route path="movies" >
+                  <Route index element={<Grid />} />
+                  <Route path=":id" element={<Detail />} />
 
-              </Route>
-              <Route path="shows" >
-                <Route index element={<Grid />} />
-                <Route path=":id" element={<Detail />} />
+                </Route>
+                <Route path="shows" >
+                  <Route index element={<Grid />} />
+                  <Route path=":id" element={<Detail />} />
 
-              </Route>
-              <Route path="anime" >
-                <Route index element={<Grid />} />
-                <Route path=":id" element={<Detail />} />
+                </Route>
+                <Route path="anime" >
+                  <Route index element={<Grid />} />
+                  <Route path=":id" element={<Detail />} />
 
-              </Route>
-              <Route path="channels" >
-                <Route path=":name" element={<Channel />} />
+                </Route>
+                <Route path="channels" >
+                  <Route path=":name" element={<Channel />} />
 
-              </Route>
+                </Route>
 
-              <Route path="category" >
-                <Route path="action" element={<Categories />} />
-                <Route path="adventure" element={<Categories />} />
-                <Route path="sci-fi" element={<Categories />} />
-                <Route path="thriller" element={<Categories />} />
-                <Route path="crime" element={<Categories />} />
-              </Route>
-              <Route path="details" element={<Detail />} />
-              <Route path="watchlater" element={<Watchlater />} />
-              <Route path="favorites" element={<Favorites />} />
-            </Route></>)
+                <Route path="category" >
+                  <Route path="action" element={<Categories />} />
+                  <Route path="adventure" element={<Categories />} />
+                  <Route path="sci-fi" element={<Categories />} />
+                  <Route path="thriller" element={<Categories />} />
+                  <Route path="crime" element={<Categories />} />
+                </Route>
+                <Route path="details" element={<Detail />} />
+                <Route path="watchlater" element={<Watchlater />} />
+                <Route path="favorites" element={<Favorites />} />
+              </Route></>)
 
         }
 

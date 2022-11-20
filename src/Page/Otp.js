@@ -1,10 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { useForm } from "react-hook-form";
 import axios from "../axios";
 import Cookies from "universal-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from '../features/user/userSlice'
 
 const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.593);
@@ -130,15 +132,25 @@ const Input = styled.div`
 export default function Otp() {
   const btnRef = useRef();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const cookies = new Cookies();
   const [otp, setOtp] = useState(new Array(4).fill(""));
+  const [auth, setAuth] = useState(false);
   const email = sessionStorage.getItem("email");
+  const authToken = cookies.get("authToken");
+  useEffect(() => {
+    if (!email || !authToken) {
+      navigate('/signup')
+    } else {
+      setAuth(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authToken, email])
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const Otp = otp.join("");
     try {
-      const authToken = cookies.get("authToken");
       const res = await axios.put("auth/verify", {
         token: authToken,
         otp: Otp,
@@ -146,6 +158,8 @@ export default function Otp() {
 
       if (res.data && res?.data?.success === true) {
         cookies.set("token", res?.data.token, { path: "/", maxAge: 1296000 });
+
+        dispatch(fetchUser(res?.data.token))
         navigate("/", { replace: true });
       }
     } catch (error) {
@@ -167,38 +181,43 @@ export default function Otp() {
     }
   };
   return (
-    <Container>
-      <Wrapper>
-        <Logo to="/">
-          <img src="../images/Logo.png" alt="" />
-        </Logo>
-        <div>
-          <div>
-            <CgProfile />
-            <h2>{email}</h2>
-          </div>
-          <Form onSubmit={onSubmit}>
-            <label htmlFor="otp">OTP</label>
-            <Input>
-              {otp.map((d, i) => {
-                return (
-                  <input
-                    key={i}
-                    value={d}
-                    onChange={(e) => enter(e.target, i)}
-                    type="number"
-                    maxLength="1"
-                    required={true}
-                    max={9}
-                    onFocus={(e) => e.target.select()}
-                  />
-                );
-              })}
-            </Input>
-            <button ref={btnRef} type="submit">Next</button>
-          </Form>
-        </div>
-      </Wrapper>
-    </Container>
+    <>
+      {
+        auth &&
+        (<Container>
+          <Wrapper>
+            <Logo to="/">
+              <img src="../images/Logo.png" alt="" />
+            </Logo>
+            <div>
+              <div>
+                <CgProfile />
+                <h2>{email}</h2>
+              </div>
+              <Form onSubmit={onSubmit}>
+                <label htmlFor="otp">OTP</label>
+                <Input>
+                  {otp.map((d, i) => {
+                    return (
+                      <input
+                        key={i}
+                        value={d}
+                        onChange={(e) => enter(e.target, i)}
+                        type="number"
+                        maxLength="1"
+                        required={true}
+                        max={9}
+                        onFocus={(e) => e.target.select()}
+                      />
+                    );
+                  })}
+                </Input>
+                <button ref={btnRef} type="submit">Next</button>
+              </Form>
+            </div>
+          </Wrapper>
+        </Container>)
+      }
+    </>
   );
 }

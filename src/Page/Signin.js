@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from '../axios'
 import Cookies from 'universal-cookie';
+import { useDispatch } from "react-redux";
+import { fetchUser } from '../features/user/userSlice'
 
 const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.593);
@@ -74,6 +76,10 @@ const Form = styled.form`
     &:hover {
       background-color: ${(p) => p.theme.color.mainDark};
     }
+    &:disabled{
+      background-color: ${(p) => p.theme.color.main};
+      opacity:0.5;
+    }
   }
   label {
     margin: 0.15rem 2.5%;
@@ -96,21 +102,41 @@ const Form = styled.form`
   }
 `;
 
+const Alert = styled.div`
+  color: #fff;
+  text-align:center;
+  font-weight:bold;
+  height:1.5rem;
+  `
+
 export default function Signin() {
+  const [alert, setAlert] = useState('');
+  const [disabled, setDisabled] = useState(false);
   const cookies = new Cookies();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = async (data) => {
+    setAlert('')
+    setDisabled(true);
     try {
       const res = await axios.post('auth/signin', { email: data.email, password: data.password });
 
       if (res.data && res?.data?.success === true) {
         cookies.set('token', res?.data.token, { path: '/', maxAge: 1296000 });
-        navigate('/', { replace: true });
+        dispatch(fetchUser(res?.data.token))
+
+        navigate("/", { replace: true });
       }
     } catch (error) {
       if (error) {
+        setDisabled(false)
+        if (error.code === "ERR_NETWORK") {
+          setAlert('Check your network connection')
+        } else {
+          setAlert(error.response?.data?.message)
+        }
         console.log(error)
         return;
       }
@@ -125,6 +151,7 @@ export default function Signin() {
         </Logo>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <h2>Login</h2>
+          <Alert>{alert}</Alert>
           <label htmlFor="email">Email</label>
           <input type="text" id="email" {...register("email", {
             required: "email is required",
@@ -144,7 +171,7 @@ export default function Signin() {
           })} />
           <span>{errors.password && errors.password.message}</span>
           <small>forget password?</small>
-          <button type="submit">Login</button>
+          <button disabled={disabled} type="submit">Login</button>
           <p>
             New to Boxx? <Link to="/signup">Sign up now</Link>
           </p>

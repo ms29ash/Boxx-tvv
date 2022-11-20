@@ -5,7 +5,7 @@ import axios from '../../axios'
 
 const initialState = {
     user: null,
-    signedIn: false,
+    signedIn: null,
 }
 
 

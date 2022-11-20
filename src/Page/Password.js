@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
@@ -87,6 +87,11 @@ const Form = styled.form`
     &:hover {
       background-color: ${(p) => p.theme.color.mainDark};
     }
+    &:disabled{
+      background-color: ${(p) => p.theme.color.main};
+      opacity: 0.5;
+
+    }
   }
   label {
     margin: 0.15rem 0;
@@ -110,12 +115,37 @@ const Form = styled.form`
   }
 `;
 
+const Alert = styled.div`
+  color: #fff;
+  text-align:center;
+  font-weight:bold;
+  height:1.5rem;
+  `
+
 export default function Password() {
+  const [alert, setAlert] = useState('');
+  const [auth, setAuth] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const cookies = new Cookies();
   const navigate = useNavigate();
   const { register, handleSubmit, control, formState: { errors } } = useForm();
   const email = sessionStorage.getItem("email");
+
+
+
+  useEffect(() => {
+    if (!email) {
+      navigate('/signup');
+    } else {
+      setAuth(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+
   const onSubmit = async (data) => {
+    setAlert('')
+    setDisabled(true);
     try {
       const res = await axios.post('auth/signup', { username: email, email: email, password: data.password });
 
@@ -125,7 +155,13 @@ export default function Password() {
       }
     } catch (error) {
       if (error) {
+        setDisabled(false);
         console.log(error)
+        if (error.code === "ERR_NETWORK") {
+          setAlert('Check your network connection')
+        } else {
+          setAlert(error.response?.data?.message)
+        }
         return;
       }
     }
@@ -136,44 +172,50 @@ export default function Password() {
   const password = useWatch({ control, name: 'password' });
   const isEqual = (cpassword) => cpassword === password;
   return (
-    <Container>
-      <Wrapper>
-        <Logo to="/">
-          <img src="../images/Logo.png" alt="" />
-        </Logo>
-        <Form onSubmit={handleSubmit(onSubmit)} >
-          <div>
-            <CgProfile />
-            <h2>{email}</h2>
-          </div>
+    <>
+      {
+        auth &&
+        <Container>
+          <Wrapper>
+            <Logo to="/">
+              <img src="../images/Logo.png" alt="" />
+            </Logo>
+            <Form onSubmit={handleSubmit(onSubmit)} >
+              <div>
+                <CgProfile />
+                <h2>{email}</h2>
+              </div>
+              <Alert>{alert}</Alert>
 
-          <label htmlFor="password">New Password</label>
-          <input type="password" id="password" {...register('password', {
-            required: "password is required",
-            minLength: {
-              value: 6,
-              message: "min length is 5"
-            }
-          })} control={control} />
+              <label htmlFor="password">New Password</label>
+              <input type="password" id="password" {...register('password', {
+                required: "password is required",
+                minLength: {
+                  value: 6,
+                  message: "min length is 5"
+                }
+              })} control={control} />
 
 
-          <span>{errors.password && errors.password.message}</span>
-          <label htmlFor="cpassword">Confirm Password</label>
-          <input type="password" id="cpassword" {...register('cpassword', {
-            required: "password is required",
-            minLength: {
-              value: 6,
-              message: "min length is 5"
-            },
-            validate: isEqual
-          })} />
-          <span>{errors.cpassword && (errors.cpassword.type = "validate" ? "password is not equal" : errors.cpassword.message)}</span>
+              <span>{errors.password && errors.password.message}</span>
+              <label htmlFor="cpassword">Confirm Password</label>
+              <input type="password" id="cpassword" {...register('cpassword', {
+                required: "password is required",
+                minLength: {
+                  value: 6,
+                  message: "min length is 5"
+                },
+                validate: isEqual
+              })} />
+              <span>{errors.cpassword && (errors.cpassword.type = "validate" ? "password is not equal" : errors.cpassword.message)}</span>
 
-          <button type="submit">Next</button>
+              <button disabled={disabled} type="submit">Next</button>
 
-        </Form>
-      </Wrapper>
+            </Form>
+          </Wrapper>
 
-    </Container>
+        </Container>
+      }
+    </>
   );
 }

@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
-import axios from '../axios'
 import Cookies from 'universal-cookie';
-import { addUser, fetchUser } from '../features/user/userSlice'
+import { fetchUser, removeUser } from '../features/user/userSlice'
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function GetUser() {
     const cookies = new Cookies();
@@ -11,32 +10,40 @@ function GetUser() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     useEffect(() => {
         const fetchUserData = () => {
-
-
-            try {
-                if (signedIn === false) {
-                    const token = cookies.get('token')
-                    if (token) {
+            if (signedIn === false || signedIn === null) {
+                const token = cookies.get('token')
+                if (token) {
+                    try {
                         dispatch(fetchUser(token));
-                    } else {
-                        navigate('/signin', { replace: true })
-                        return
+                        // navigate.goBack();
                     }
-
+                    catch (error) {
+                        console.error(error);
+                    }
                 } else {
+                    dispatch(removeUser())
+
+                    if (pathname === '/signup' || pathname === 'signin' || pathname === '/signup/otp' || pathname === '/signup/password') {
+                        return
+                    } else {
+
+                        navigate('/signin', { replace: true })
+                    }
                     return
                 }
-            }
-            catch (error) {
-                console.error(error);
+
+            } else {
+                return
             }
         }
         fetchUserData();
     },
-        // eslint-disable-next-line 
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [])
     return (
         <></>
