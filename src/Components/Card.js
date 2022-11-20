@@ -77,6 +77,8 @@ function Card({ item, title, id }) {
   const findWatchLater = useSelector((state) => state.list.watchLater);
   //index in watchlater list
   const [index, setIndex] = useState(-1);
+  //disable watchlater button
+  const [disabledWatchLater, setDisabledWatchLater] = useState(false);
 
   //finding index in watchlater list
   useEffect(() => {
@@ -85,12 +87,16 @@ function Card({ item, title, id }) {
   }, [findWatchLater, item._id]);
 
   //Add to watchlater
-  const addToWatchLaterHandler = () => {
-    dispatch(addToListWatch({ type: title, id: item._id }));
+  const addToWatchLaterHandler = async () => {
+    setDisabledWatchLater(true)
+    await dispatch(addToListWatch({ type: title, id: item._id }));
+    setDisabledWatchLater(false)
   };
   //Remove from watchlater
-  const removeFromWatchLater = (index) => {
-    dispatch(removeFromListWatch(index));
+  const removeFromWatchLater = async (index) => {
+    setDisabledWatchLater(true)
+    await dispatch(removeFromListWatch(index));
+    setDisabledWatchLater(false)
   };
   return (
     <>
@@ -113,7 +119,7 @@ function Card({ item, title, id }) {
           <p>{item?.category}</p>
 
           {index < 0 ? (
-            <button
+            <button disabled={disabledWatchLater}
               onClick={() => {
                 addToWatchLaterHandler();
               }}>
@@ -121,7 +127,7 @@ function Card({ item, title, id }) {
               Add to Watchlist
             </button>
           ) : (
-            <button
+            <button disabled={disabledWatchLater}
               onClick={() => {
                 removeFromWatchLater(index);
               }}>

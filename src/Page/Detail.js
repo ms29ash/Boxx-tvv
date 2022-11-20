@@ -134,6 +134,9 @@ const WatchListBtn = styled(PlayBtn)`
   &:hover {
     background-color: rgb(89, 89, 89, 0.5);
   }
+  &:disabled{
+    opacity:0.3;
+  }
 `;
 const Desc = styled.p`
   width: 56%;
@@ -166,16 +169,22 @@ function Detail() {
   }, [data, findWatchlater]);
 
 
+  //disabled watchlater button 
+  const [disabledWatchLater, setDisabledWatchLater] = useState(false)
 
   const dispatch = useDispatch();
   //Add to watchlater
-  const addtoWatchLater = (item) => {
-    dispatch(addToListWatch({ type: path[1], id: data?.data[0]?._id }));
+  const addtoWatchLater = async () => {
+    setDisabledWatchLater(true)
+    await dispatch(addToListWatch({ type: path[1], id: data?.data[0]?._id }));
+    setDisabledWatchLater(false)
   };
 
   //Remove from watch later
-  const removeFromWatchLater = () => {
-    dispatch(removeFromListWatch(index));
+  const removeFromWatchLater = async () => {
+    setDisabledWatchLater(true)
+    await dispatch(removeFromListWatch(index));
+    setDisabledWatchLater(false)
   };
 
   return (
@@ -188,14 +197,14 @@ function Detail() {
               <Group>
                 <Buttons>
                   {index < 0 ? (
-                    <WatchListBtn
+                    <WatchListBtn disabled={disabledWatchLater}
                       onClick={() => {
                         addtoWatchLater({ item: data?.data[0], title: path[1] });
                       }}>
                       <AiOutlinePlusCircle /> Add to Watchlist
                     </WatchListBtn>
                   ) : (
-                    <WatchListBtn
+                    <WatchListBtn disabled={disabledWatchLater}
                       onClick={() => {
                         removeFromWatchLater(index);
                       }}>
