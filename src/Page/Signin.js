@@ -4,8 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from '../axios'
 import Cookies from 'universal-cookie';
-import { useDispatch } from "react-redux";
-import { fetchUser } from '../features/user/userSlice'
 
 const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.593);
@@ -26,7 +24,7 @@ const Container = styled.div`
     z-index: -1;
   }
 `;
-const Logo = styled(Link)`
+const Logo = styled.div`
   width: 100%;
   height: fit-content;
   display: grid;
@@ -114,8 +112,6 @@ export default function Signin() {
   const [disabled, setDisabled] = useState(false);
   const cookies = new Cookies();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = async (data) => {
     setAlert('')
@@ -125,8 +121,6 @@ export default function Signin() {
 
       if (res.data && res?.data?.success === true) {
         cookies.set('token', res?.data.token, { path: '/', maxAge: 1296000 });
-        dispatch(fetchUser(res?.data.token))
-
         navigate("/", { replace: true });
       }
     } catch (error) {
@@ -146,7 +140,7 @@ export default function Signin() {
   return (
     <Container>
       <Wrapper>
-        <Logo to="/">
+        <Logo >
           <img src="./images/Logo.png" alt="" />
         </Logo>
         <Form onSubmit={handleSubmit(onSubmit)}>

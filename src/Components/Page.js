@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import SideMenu from './SideMenu'
 import { Outlet } from 'react-router-dom'
 import Header from './Header';
-import Footer from './Footer';
 
 
 const Container = styled.div`
@@ -33,7 +32,6 @@ function Page() {
                 <Main id="scroll" >
                     <Header />
                     <Outlet />
-                    <Footer />
                 </Main>
             </Container>
 

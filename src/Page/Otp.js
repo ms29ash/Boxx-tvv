@@ -2,11 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
-import { useForm } from "react-hook-form";
 import axios from "../axios";
 import Cookies from "universal-cookie";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from '../features/user/userSlice'
 
 const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.593);
@@ -132,7 +129,6 @@ const Input = styled.div`
 export default function Otp() {
   const btnRef = useRef();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const cookies = new Cookies();
   const [otp, setOtp] = useState(new Array(4).fill(""));
   const [auth, setAuth] = useState(false);
@@ -158,8 +154,6 @@ export default function Otp() {
 
       if (res.data && res?.data?.success === true) {
         cookies.set("token", res?.data.token, { path: "/", maxAge: 1296000 });
-
-        dispatch(fetchUser(res?.data.token))
         navigate("/", { replace: true });
       }
     } catch (error) {

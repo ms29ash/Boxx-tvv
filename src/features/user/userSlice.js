@@ -6,6 +6,7 @@ import axios from '../../axios'
 const initialState = {
     user: null,
     signedIn: null,
+    loading: false,
 }
 
 
@@ -34,12 +35,20 @@ export const userSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchUser.fulfilled, (state, action) => {
-            const { username, email } = action.payload
-            state.signedIn = true;
-            state.user = { username, email }
-
+        builder.addCase(fetchUser.pending, (state) => {
+            state.loading = true
         })
+            .addCase(fetchUser.fulfilled, (state, action) => {
+                const { username, email } = action.payload
+                state.loading = false;
+                state.signedIn = true;
+                state.user = { username, email }
+
+            })
+            .addCase(fetchUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
     }
 })
 export const { addUser, removeUser } = userSlice.actions;
