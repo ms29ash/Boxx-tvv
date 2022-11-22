@@ -127,7 +127,7 @@ function ImageSlider({ title }) {
       <Carousel {...settings}>
         {isSuccess &&
           data?.data.map((item) => (
-            <Card css={`height:100%;`} title={title} item={item} />
+            <Card key={item._id} css={`height:100%;`} title={title} item={item} />
           ))}
         {isLoading &&
           Array(10)

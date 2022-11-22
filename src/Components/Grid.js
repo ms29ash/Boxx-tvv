@@ -58,7 +58,7 @@ function Grid() {
           {isSuccess &&
             data?.data.map((item) => {
               return (
-                <Card css={'width: 18%; margin: 1%;@media screen and (min-width: 0px) (max-width: 720px) {width: 31%;}'} title={title} id={item._id} item={item} />
+                <Card key={item._id} css={'width: 18%; margin: 1%;@media screen and (min-width: 0px) and (max-width: 720px) {width: 31%;}'} title={title} id={item._id} item={item} />
               );
             })}
           {
