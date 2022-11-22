@@ -27,30 +27,8 @@ const Box = styled.div`
   width: 18%;
   aspect-ratio: 6/ 8;
   margin: 1%;
-  color: white;
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 250ms;
-  cursor: pointer;
   @media screen and (min-width: 0px) and (max-width: 720px) {
     width: 31%;
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-  @media screen and (min-width: 1440px) and (max-width: 10000px) {
-    &:hover {
-      transform: scale(1.25);
-      z-index: 5;
-
-      div {
-        display: flex;
-      }
-    }
   }
 `;
 
@@ -80,15 +58,12 @@ function Grid() {
           {isSuccess &&
             data?.data.map((item) => {
               return (
-                <Box key={item._id}>
-                  <Card title={title} id={item._id} item={item} />
-                </Box>
+                <Card css={'width: 18%; margin: 1%;@media screen and (min-width: 0px) (max-width: 720px) {width: 31%;}'} title={title} id={item._id} item={item} />
               );
             })}
           {
             isLoading && Array(10).fill('').map((p, i) =>
               <Box key={i}>
-
                 <LoadAnimation />
               </Box>
             )

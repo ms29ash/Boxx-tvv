@@ -11,6 +11,7 @@ const token = cookies.get('token')
 const initialState = {
     watchLater: [],
     favorites: [],
+    loading: false,
 }
 
 //Add to favorites
@@ -82,18 +83,38 @@ export const listSlice = createSlice({
         //for add to favorites
         builder.addCase(addToListFav.fulfilled, (state, action) => {
             state.favorites.push(action.payload);
+            state.loading = false;
+        }).addCase(addToListFav.pending, (state) => {
+            state.loading = true;
+        }).addCase(addToListFav.rejected, (state, action) => {
+            state.loading = false;
         })
         //for add to watchlater
         builder.addCase(addToListWatch.fulfilled, (state, action) => {
             state.watchLater.push(action.payload);
+            state.loading = false;
+        }).addCase(addToListWatch.pending, (state) => {
+            state.loading = true;
+        }).addCase(addToListWatch.rejected, (state) => {
+            state.loading = false;
         })
         //for Remove from favorites
         builder.addCase(removeFromListFav.fulfilled, (state, action) => {
             state.favorites.splice(action.payload, 1);
+            state.loading = false;
+        }).addCase(removeFromListFav.pending, (state) => {
+            state.loading = true;
+        }).addCase(removeFromListFav.rejected, (state) => {
+            state.loading = false;
         })
         //for remove from watchlater
         builder.addCase(removeFromListWatch.fulfilled, (state, action) => {
             state.watchLater.splice(action.payload, 1);
+            state.loading = false;
+        }).addCase(removeFromListWatch.pending, (state) => {
+            state.loading = true;
+        }).addCase(removeFromListWatch.rejected, (state) => {
+            state.loading = false;
         })
     }
 

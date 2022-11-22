@@ -11,6 +11,30 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import LoadingAnimation from "./LoadAnimation";
 import getIndexOf from "../Functions/GetIndex";
 
+const Container = styled.div`
+position: relative;
+cursor: pointer;
+aspect-ratio: 6/ 8;
+transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 250ms;
+  color:#fff;
+  overflow:visible;
+  user-select: none;
+  ${p => p.css}
+  @media screen and (min-width: 1024px) and (max-width: 10000px) {
+    &:hover {
+      transform: scale(1.25);
+      z-index: 10;
+      div {
+        opacity: 1;
+      }
+    }
+  }
+
+
+`
+
 const Img = styled(LazyLoadImage)`
   width: 96%;
   object-fit: cover;
@@ -21,10 +45,14 @@ const Img = styled(LazyLoadImage)`
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
 `;
 const Details = styled.div`
-  border-radius: 14px;
-  display: none;
+	transition-property: all; 
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+   transition-duration: 350ms;
+  border-radius: 0 0 14px 14px;
+  opacity: 0;
   position: absolute;
   align-items: flex-end;
+  display:flex;
   bottom: 0;
   right: 0%;
   left: 0%;
@@ -33,12 +61,12 @@ const Details = styled.div`
   background: linear-gradient(
     0deg,
     rgba(242, 5, 68, 1) 55%,
-    rgba(242, 5, 68, 0.5) 96%
+    rgba(242, 5, 68, 0.3) 96%,
+    rgb(242,5, 68,0) 100%
   );
-  cursor: default;
-  div {
+  &>div {
     margin-bottom: 1rem;
-    margin-left: 10%;
+    margin-left: 5%;
     flex-direction: column;
   }
   button {
@@ -60,6 +88,14 @@ const Details = styled.div`
   }
 `;
 
+const SubDetails = styled.div`
+margin-bottom:0.5rem;
+p{
+  text-transform:lowercase;
+    font-size: 0.75rem;
+  }
+`
+
 const LoadAnimation = styled(LoadingAnimation)`
   width: 96%;
   border-radius: 8px;
@@ -69,37 +105,35 @@ const LoadAnimation = styled(LoadingAnimation)`
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
 `;
 
-function Card({ item, title, id }) {
+function Card({ item, title, id, css }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   //watchlater list
-  const findWatchLater = useSelector((state) => state.list.watchLater);
+  const { watchLater, loading } = useSelector((state) => state.list);
   //index in watchlater list
   const [index, setIndex] = useState(-1);
-  //disable watchlater button
-  const [disabledWatchLater, setDisabledWatchLater] = useState(false);
 
   //finding index in watchlater list
   useEffect(() => {
-    const i = getIndexOf(findWatchLater, item._id);
+    const i = getIndexOf(watchLater, item._id);
     setIndex(i);
-  }, [findWatchLater, item._id]);
+  }, [watchLater, item._id]);
 
   //Add to watchlater
-  const addToWatchLaterHandler = async () => {
-    setDisabledWatchLater(true)
-    await dispatch(addToListWatch({ type: title, id: item._id }));
-    setDisabledWatchLater(false)
+  const addToWatchLaterHandler = (e) => {
+    e.stopPropagation()
+    dispatch(addToListWatch({ type: title, id: item._id }));
   };
   //Remove from watchlater
-  const removeFromWatchLater = async (index) => {
-    setDisabledWatchLater(true)
-    await dispatch(removeFromListWatch(index));
-    setDisabledWatchLater(false)
+  const removeFromWatchLater = (e, index) => {
+    e.stopPropagation()
+    dispatch(removeFromListWatch(index));
   };
   return (
-    <>
+    <Container css={css} onClick={() => {
+      navigate(`/${title}/${item._id}`);
+    }} >
       <Img
         src={item?.thumbnail}
         alt=""
@@ -107,29 +141,29 @@ function Card({ item, title, id }) {
         effect="blur"
         threshold={500}
         placeholder={<LoadAnimation />}
-        onClick={() => {
-          navigate(`/${title}/${item._id}`);
-        }}
+
       />
       <Details>
         <div>
           <h4>{item?.name}</h4>
-          {item?.seasons && <p>{item?.seasons} Seasons</p>}
-          {item?.time && <p>{item?.time} </p>}
-          <p>{item?.category}</p>
+          <SubDetails>
+            <p>{item?.category}</p>
+            {item?.seasons ? (item.seasons > 1) ? <p>{item?.seasons} Seasons</p> : <p>{item.seasons} Season</p> : ''}
+            {item?.time && <p>{item?.time} </p>}
+          </SubDetails>
 
           {index < 0 ? (
-            <button disabled={disabledWatchLater}
-              onClick={() => {
-                addToWatchLaterHandler();
+            <button disabled={loading}
+              onClick={(e) => {
+                addToWatchLaterHandler(e);
               }}>
               <AiOutlinePlusCircle />
               Add to Watchlist
             </button>
           ) : (
-            <button disabled={disabledWatchLater}
-              onClick={() => {
-                removeFromWatchLater(index);
+            <button disabled={loading}
+              onClick={(e) => {
+                removeFromWatchLater(e, index);
               }}>
               <AiOutlineCheckCircle />
               Added to Watchlist
@@ -137,7 +171,7 @@ function Card({ item, title, id }) {
           )}
         </div>
       </Details>
-    </>
+    </Container>
   );
 }
 

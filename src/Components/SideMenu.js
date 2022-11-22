@@ -11,7 +11,6 @@ import {
   AiOutlineHome,
   AiOutlineClockCircle,
   AiOutlineHeart,
-  AiOutlineCloudDownload,
   AiOutlineSetting,
 } from "react-icons/ai";
 import { BsBookmark } from "react-icons/bs";
@@ -254,15 +253,6 @@ function SideMenu() {
                   <BsBookmark />{" "}
                 </Icon>
                 <p>Watchlater</p>
-              </Opt>
-              <Opt
-                to="/downloads"
-                onClick={closeMenu}
-                selected={pathname === "/downloads"}>
-                <Icon>
-                  <AiOutlineCloudDownload />{" "}
-                </Icon>
-                <p>Downloads</p>
               </Opt>
             </Group>
             <hr />

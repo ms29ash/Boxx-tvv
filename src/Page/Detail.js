@@ -160,31 +160,24 @@ function Detail() {
   );
 
   //Find index in watchlater
-  const findWatchlater = useSelector((state) => state.list?.watchLater);
+  const { watchLater, loading } = useSelector((state) => state.list);
   const [index, setIndex] = useState(-1);
   useEffect(() => {
 
-    const i = getIndexOf(findWatchlater, data?.data[0]?._id);
+    const i = getIndexOf(watchLater, data?.data[0]?._id);
     setIndex(i);
-  }, [data, findWatchlater]);
+  }, [data, watchLater]);
 
-
-  //disabled watchlater button 
-  const [disabledWatchLater, setDisabledWatchLater] = useState(false)
 
   const dispatch = useDispatch();
   //Add to watchlater
   const addtoWatchLater = async () => {
-    setDisabledWatchLater(true)
     await dispatch(addToListWatch({ type: path[1], id: data?.data[0]?._id }));
-    setDisabledWatchLater(false)
   };
 
   //Remove from watch later
   const removeFromWatchLater = async () => {
-    setDisabledWatchLater(true)
     await dispatch(removeFromListWatch(index));
-    setDisabledWatchLater(false)
   };
 
   return (
@@ -197,14 +190,14 @@ function Detail() {
               <Group>
                 <Buttons>
                   {index < 0 ? (
-                    <WatchListBtn disabled={disabledWatchLater}
+                    <WatchListBtn disabled={loading}
                       onClick={() => {
                         addtoWatchLater({ item: data?.data[0], title: path[1] });
                       }}>
                       <AiOutlinePlusCircle /> Add to Watchlist
                     </WatchListBtn>
                   ) : (
-                    <WatchListBtn disabled={disabledWatchLater}
+                    <WatchListBtn disabled={loading}
                       onClick={() => {
                         removeFromWatchLater(index);
                       }}>

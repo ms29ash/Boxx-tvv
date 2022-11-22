@@ -67,24 +67,7 @@ const Carousel = styled(Slider)`
 
 const Wrap = styled.div`
   position: relative;
-  cursor: pointer;
-  overflow: visible;
   height: 100%;
-  color: #fff;
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 250ms;
-
-  @media screen and (min-width: 1024px) and (max-width: 10000px) {
-    &:hover {
-      transition-duration: 300ms;
-      transform: scale(1.25);
-      z-index: 10;
-      div {
-        display: flex;
-      }
-    }
-  }
 `;
 
 const LoadAnimation = styled(LoadingAnimation)`
@@ -144,9 +127,7 @@ function ImageSlider({ title }) {
       <Carousel {...settings}>
         {isSuccess &&
           data?.data.map((item) => (
-            <Wrap key={item._id}>
-              <Card title={title} item={item} />
-            </Wrap>
+            <Card css={`height:100%;`} title={title} item={item} />
           ))}
         {isLoading &&
           Array(10)
